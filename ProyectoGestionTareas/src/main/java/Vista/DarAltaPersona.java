@@ -7,7 +7,10 @@ package Vista;
 
 import Controlador.Controlador;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 
 /**
@@ -50,6 +53,16 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
         jLabel3.setText("Correo:");
 
         botonAnyadir.setText("CREAR PERSONA");
+
+
+
+        ActionListener personaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.crearPersona();
+            }
+        };
+        botonAnyadir.addActionListener(personaListener);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,42 +109,10 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DarAltaPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DarAltaPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DarAltaPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DarAltaPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    /***/
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DarAltaPersona().setVisible(true);
-            }
-        });
-    }
     public void setControlador(Controlador c){
-        getBotonAnyadir().addActionListener(c);
+        controlador=c;
     }
     // Variables declaration - do not modify
     private javax.swing.JButton botonAnyadir;
@@ -141,6 +122,8 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+
+    public Controlador controlador;
 
     public JButton getBotonAnyadir() {
         return botonAnyadir;
@@ -169,5 +152,7 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
     public JLabel getjLabel3() {
         return jLabel3;
     }
+
+
     // End of variables declaration
 }

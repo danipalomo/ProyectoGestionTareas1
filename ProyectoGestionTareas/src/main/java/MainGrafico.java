@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class MainGrafico implements Serializable {
     public static void main(String[] args) {
         VentanaInicio ventanaInicio=new VentanaInicio();
-        Modelo m=new Modelo();
-        MenuGestor menu=new MenuGestor();
+        Modelo modelo=new Modelo();
+        MenuGestor menu=new MenuGestor(true);
         CargarProyecto cargarProyecto=new CargarProyecto();
         DarAltaTarea darAltaTarea=new DarAltaTarea();
         DarAltaPersona darAltaPersona=new DarAltaPersona();
@@ -19,12 +19,22 @@ public class MainGrafico implements Serializable {
         TareaPaginaWeb tareaPaginaWeb=new TareaPaginaWeb();
         EditarPersona editarPersona=new EditarPersona();
         EditarTarea editarTarea=new EditarTarea();
-        Controlador c=new Controlador(darAltaTarea, cargarProyecto, darAltaPersona, tareaPaginaWeb, tareaBiblioteca, tareaPrograma, menu, tareaDocumentacion,ventanaInicio, m, editarPersona, editarTarea);
+        Controlador c=new Controlador(darAltaTarea, cargarProyecto, darAltaPersona, tareaPaginaWeb, tareaBiblioteca, tareaPrograma, menu, tareaDocumentacion,ventanaInicio, modelo, editarPersona, editarTarea);
         ventanaInicio.setControlador(c);
         menu.setControlador(c);
         darAltaTarea.setControlador(c);
      //  cargarProyecto.setControlador(c);
+
+        ventanaInicio.setControlador(c);
+
         darAltaTarea.setControlador(c);
+        menu.setDarAltaTarea(darAltaTarea);
+        menu.setDarAltaPersona(darAltaPersona);
+        menu.setEditarTarea(editarTarea);
+        menu.setControlador(c);
+
+        editarTarea.setControlador(c);
+
         darAltaPersona.setControlador(c);
         tareaDocumentacion.setControlador(c);
         tareaBiblioteca.setControlador(c);

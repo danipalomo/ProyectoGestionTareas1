@@ -5,10 +5,14 @@
  */
 package Vista;
 
+import Clases.Tarea;
 import Controlador.Controlador;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,9 +23,24 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form EditarPersona
      */
+
+    public void actualizarTareas(ArrayList<Tarea> listatareas){
+        DefaultListModel tareas=new DefaultListModel();
+        tareas.addAll(listatareas);
+        this.getListaTareas().setModel(tareas);
+    }
+
+    public void actualizarTareasEspecificas(ArrayList<Tarea> listEspec){
+        DefaultListModel tareas=new DefaultListModel();
+        tareas.addAll(listEspec);
+        this.listaTareasAsignadas.setModel(tareas);
+    }
+
     public EditarPersona() {
         initComponents();
     }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +55,7 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
         botonQuitarTarea = new javax.swing.JButton();
         botonBorrarPersona = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaTareas = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         botonCerrar = new javax.swing.JButton();
         labelError = new javax.swing.JLabel();
@@ -52,16 +71,45 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
 
         botonBorrarPersona.setText("BORRAR PERSONA");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+
+        jScrollPane1.setViewportView(listaTareas);
 
         jLabel1.setText("TAREAS");
 
         botonCerrar.setText("CERRAR");
+
+        ActionListener anyadirPersonaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.anyadirTareaAPersona();
+            }
+        };
+        botonAnyadirTarea.addActionListener(anyadirPersonaListener);
+
+
+        ActionListener cerrarListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.cerrarEditarPersona();
+            }
+        };
+        botonCerrar.addActionListener(cerrarListener);
+
+        ActionListener quitarListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.quitarTarea();
+            }
+        };
+        botonQuitarTarea.addActionListener(quitarListener);
+
+        ActionListener borrarPersonaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.borrarPersona();
+            }
+        };
+        botonBorrarPersona.addActionListener(borrarPersonaListener);
 
         listaTareasAsignadas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jScrollPane2.setViewportView(listaTareasAsignadas);
@@ -170,12 +218,12 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
         this.jLabel1 = jLabel1;
     }
 
-    public JList<String> getjList1() {
-        return jList1;
+    public JList<String> getListaTareas() {
+        return listaTareas;
     }
 
-    public void setjList1(JList<String> jList1) {
-        this.jList1 = jList1;
+    public void setListaTareas(JList<String> listaTareas) {
+        this.listaTareas = listaTareas;
     }
 
     public JScrollPane getjScrollPane1() {
@@ -186,40 +234,6 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
         this.jScrollPane1 = jScrollPane1;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditarPersona().setVisible(true);
-            }
-        });
-    }
 
     public JLabel getjLabel2() {
         return jLabel2;
@@ -242,10 +256,7 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
 
         }*/
     public void setControlador(Controlador c){
-        botonBorrarPersona.addActionListener(c);
-        botonCerrar.addActionListener(c);
-        botonAnyadirTarea.addActionListener(c);
-        botonQuitarTarea.addActionListener(c);
+        controlador=c;
     }
 
 
@@ -256,10 +267,11 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton botonQuitarTarea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> listaTareas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelError;
     private javax.swing.JList<String> listaTareasAsignadas;
+    private Controlador controlador;
     // End of variables declaration
 }

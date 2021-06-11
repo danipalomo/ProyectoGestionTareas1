@@ -161,8 +161,8 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
         this.personasAsignadas.add(persona);
     }
 
-    public void eliminarPersonasAsignadas(Persona persona){
-        this.personasAsignadas.remove(persona);
+    public void eliminarPersonasAsignadas(int index){
+        this.personasAsignadas.remove(index);
     }
 
     public void eliminarPersonaAsignada(int index){

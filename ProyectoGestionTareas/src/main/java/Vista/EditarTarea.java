@@ -5,10 +5,14 @@
  */
 package Vista;
 
+import Clases.Persona;
 import Controlador.Controlador;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,6 +23,25 @@ public class EditarTarea extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form EditarTarea
      */
+
+    public Controlador controlador;
+
+    public void setControlador(Controlador c){
+        controlador=c;
+    }
+
+    public void actualizarPersonas(ArrayList<Persona> listPersonas){
+        DefaultListModel personas=new DefaultListModel();
+        personas.addAll(listPersonas);
+        this.listaPersonas.setModel(personas);
+    }
+
+    public void actualizarPersonasEspecificas(ArrayList<Persona> listEspec){
+        DefaultListModel personas=new DefaultListModel();
+        personas.addAll(listEspec);
+        this.listaPersonasAsignadas.setModel(personas);
+    }
+
     public EditarTarea() {
         initComponents();
     }
@@ -79,6 +102,7 @@ public class EditarTarea extends javax.swing.JFrame implements Serializable {
         this.botonAnyadirPersona = botonAnyadirPersona;
     }
 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,6 +138,40 @@ public class EditarTarea extends javax.swing.JFrame implements Serializable {
         botonDarBajaTarea.setText("DAR DE BAJA TAREA");
 
         botonCerrar.setText("CERRAR");
+
+        ActionListener anyadirListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.anyadirPersonaATarea();
+            }
+        };
+        botonAnyadirPersona.addActionListener(anyadirListener);
+
+        ActionListener cerrarListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.cerrarEditarTarea();
+            }
+        };
+        botonCerrar.addActionListener(cerrarListener);
+
+        ActionListener quitarPersonaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.quitarPersona();
+            }
+        };
+        botonQuitarPersona.addActionListener(quitarPersonaListener);
+
+        ActionListener finalizadaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.setTareaFinalizada();
+            }
+        };
+        botonDarBajaTarea.addActionListener(finalizadaListener);
+
+
 
         listaPersonasAsignadas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jScrollPane2.setViewportView(listaPersonasAsignadas);
@@ -184,46 +242,9 @@ public class EditarTarea extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditarTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditarTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditarTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditarTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditarTarea().setVisible(true);
-            }
-        });
-    }
-    public void setControlador(Controlador c){
-        botonAnyadirPersona.addActionListener(c);
-        botonCerrar.addActionListener(c);
-        botonDarBajaTarea.addActionListener(c);
-        botonQuitarPersona.addActionListener(c);
-    }
+
+
 
     public JLabel getjLabel2() {
         return jLabel2;

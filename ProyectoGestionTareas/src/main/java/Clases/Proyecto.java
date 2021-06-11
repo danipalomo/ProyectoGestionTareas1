@@ -12,7 +12,11 @@ public class Proyecto extends UtilidadesParaListas implements Serializable {
     private ArrayList<Tarea> listaTareas;
     private ArrayList<Persona> listaPersonas;
 
-
+    public Proyecto(){
+        nombreProyecto="";
+        listaTareas=new ArrayList<Tarea>();
+        listaPersonas=new ArrayList<Persona>();
+    }
     public Proyecto(String nombre) {
         this.nombreProyecto=nombre;
         this.listaTareas = new ArrayList<>();
@@ -38,16 +42,7 @@ public class Proyecto extends UtilidadesParaListas implements Serializable {
             }
         }
     }
-    public void eliminarPersonaDeTarea(Persona persona, Tarea tarea) throws PersonaRepetidaException {
-        if(!(listaPersonas.contains(persona))){
-            throw new PersonaRepetidaException("Error, esa persona no está en el proyecto");
-        }
-        for(Tarea t:listaTareas){
-            if(t.equals(tarea)){
-                tarea.eliminarPersonasAsignadas(persona);
-            }
-        }
-    }
+
 
     public String getNombreProyecto() {
         return nombreProyecto;
@@ -72,8 +67,6 @@ public class Proyecto extends UtilidadesParaListas implements Serializable {
         }
         return null;
     }
-
-
 
     public ArrayList<Tarea> getListaTareas() {
         return listaTareas;

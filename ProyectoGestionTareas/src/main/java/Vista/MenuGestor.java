@@ -5,10 +5,16 @@
  */
 package Vista;
 
+import Clases.Persona;
+import Clases.Tarea;
 import Controlador.Controlador;
+import Modelo.Modelo;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,9 +25,35 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form MenuGestor
      */
+    private Controlador controlador;
+    private DarAltaTarea darAltaTarea=new DarAltaTarea();
+    private DarAltaPersona darAltaPersona=new DarAltaPersona();
 
-    public MenuGestor() {
-        initComponents();
+    private EditarTarea editarTarea=new EditarTarea();
+
+
+    public void setDarAltaTarea(DarAltaTarea aT){
+        darAltaTarea=aT;
+    }
+
+    public void setControlador(Controlador c){
+        this.controlador=c;
+    }
+
+    public void setEditarTarea(EditarTarea eT){
+        editarTarea=eT;
+    }
+
+    public void setDarAltaPersona(DarAltaPersona aP){
+        darAltaPersona=aP;
+    }
+
+    public MenuGestor(){
+
+    }
+
+    public MenuGestor(boolean c) {
+        if(c){initComponents();}
     }
 
     public JButton getBotonAnyadirPersona() {
@@ -99,6 +131,8 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
             }
         });
 
+
+
         botonGuardarYSalir.setText("GUARDAR Y SALIR");
         botonGuardarYSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,11 +145,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         jScrollPane2.setViewportView(listaPersonas);
 
         botonEditarTarea.setText("EDITAR TAREA");
-        botonEditarTarea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonFinalizarTareaActionPerformed(evt);
-            }
-        });
+
 
         botonEditarPersona.setText("EDITAR PERSONA");
         botonEditarPersona.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +153,22 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
                 botonEliminarPersonaActionPerformed(evt);
             }
         });
+
+        ActionListener editarTareaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.editarTarea();
+            }
+        };
+        botonEditarTarea.addActionListener(editarTareaListener);
+
+        ActionListener editarPersonaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.editarPersona();
+            }
+        };
+        botonEditarPersona.addActionListener(editarPersonaListener);
 
         botonVerTarea.setText("VER TAREA");
 
@@ -180,24 +226,19 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>
 
-    public void setControlador(Controlador c){
-        botonCrearTarea.addActionListener(c);
-        botonAnyadirPersona.addActionListener(c);
-        botonGuardarYSalir.addActionListener(c);
-        botonEditarPersona.addActionListener(c);
-        botonEditarTarea.addActionListener(c);
-    }
     private void botonCrearTareaActionPerformed(java.awt.event.ActionEvent evt) {
+        darAltaTarea.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }
 
     private void botonAnyadirPersonaActionPerformed(java.awt.event.ActionEvent evt) {
+        darAltaPersona.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }
 
-    private void botonFinalizarTareaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+
 
     private void botonEliminarPersonaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -208,32 +249,21 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
     }
 
     /**
-     * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuGestor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuGestor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuGestor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuGestor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
+
+
+
+    public void actualizarTareas(ArrayList<Tarea> listatareas){
+        DefaultListModel tareas=new DefaultListModel();
+        tareas.addAll(listatareas);
+        listaTareas.setModel(tareas);
+    }
+
+    public void actualizarPersonas(ArrayList<Persona> listapersonas){
+        DefaultListModel personas=new DefaultListModel();
+        personas.addAll(listapersonas);
+        listaPersonas.setModel(personas);
     }
 
     // Variables declaration - do not modify

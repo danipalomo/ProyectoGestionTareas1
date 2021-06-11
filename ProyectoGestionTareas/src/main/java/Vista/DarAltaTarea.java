@@ -8,6 +8,7 @@ package Vista;
 import Controlador.Controlador;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 import javax.swing.*;
@@ -147,6 +148,14 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         simboloEuro = new javax.swing.JLabel();
 
         jLabel12.setText("jLabel12");
+
+        ActionListener crearListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.crearTarea();
+            }
+        };
+       botonCrear.addActionListener(crearListener);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DAR DE ALTA TAREA");
@@ -460,6 +469,8 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
 
     }
+
+
 /*
     private void botonCrearActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -481,7 +492,7 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         }
     }*/
     public void setControlador(Controlador c){
-        botonCrear.addActionListener(c);
+        controlador=c;
     }
     private void desplegableInternoExternoActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -520,6 +531,8 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
 
     }
+
+
 
     /**
      * @param args the command line arguments
@@ -610,5 +623,6 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel simboloEuro;
     private javax.swing.JSpinner spinnerNumHoras;
     private javax.swing.JSpinner spinnerPrioridad;
+    private Controlador controlador;
     // End of variables declaration
 }

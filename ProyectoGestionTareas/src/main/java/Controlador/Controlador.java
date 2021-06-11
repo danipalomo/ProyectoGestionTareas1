@@ -28,42 +28,18 @@ public class Controlador implements ActionListener {
     private Modelo modelo;
     private EditarPersona editarPersona;
     private EditarTarea editarTarea;
-    private DefaultListModel listModelTareas = new DefaultListModel();
-    private DefaultListModel listModelPersonas = new DefaultListModel();
-    private DefaultListModel listModelTareasDeUnaPersonaEspecifica = new DefaultListModel();
-    private DefaultListModel listModelPersonasDeUnaTareaEspecifica = new DefaultListModel();
-    private int punteroListaPersonas;
-    private int punteroListaTareas;
+
+    private int punteroListaPersonas; //puntero de la persona seleccionada en el menu gestor
+    private int punteroListaTareas; //puntero de la tarea seleccionada en el menu gestor
     private int punteroListaPersonasEditarTarea;
     private int punteroListaPersonasDeUnaTarea;
-    private int puntero1; //punteroListaTareas
-    private int puntero2; //punteroListaPersonasEditarTarea
 
-    public void borrarListaTareaAsignadasAUnaPersona(Persona p){
-        listModelTareasDeUnaPersonaEspecifica.removeAllElements();
-        if(puntero1==0){
-            listModelTareasDeUnaPersonaEspecifica.removeAllElements();
-        }
-        for(int i=0; i<p.getListaTareas().size();i++){
-            listModelTareasDeUnaPersonaEspecifica.addElement(p.getListaTareas().get(i));
-        }
-    }
+    private int punteroListaTareasEditarPersona;
+    private int punteroListaTareasDeUnaPersona;
 
-    public void borrarListaPersonasAsignadasAUnaTarea(Tarea t){
-        listModelPersonasDeUnaTareaEspecifica.removeAllElements();
-        if(punteroListaPersonasDeUnaTarea==0){
-            listModelPersonasDeUnaTareaEspecifica.removeAllElements();
-        }
-        for(int i=0; i<t.getPersonasAsignadas().size();i++){
-            listModelPersonasDeUnaTareaEspecifica.addElement(t.getPersonasAsignadas().get(i));
-        }
-    }
-    public void anyadirListaPersonasAsignadasAUnaTarea(){
-        listModelPersonasDeUnaTareaEspecifica.addAll(modelo.getProyecto().getListaTareas().get(punteroListaTareas).getPersonasAsignadas());
-    }
-    public void actualizarListaTareasDeUnaPersonaEspecifica(){
-        listModelTareasDeUnaPersonaEspecifica.addAll(modelo.getProyecto().getListaPersonas().get(punteroListaPersonas).getLista());
-    }
+
+
+
     public Controlador(DarAltaTarea altaTarea, CargarProyecto cargarProyecto, DarAltaPersona darAltaPersona, TareaPaginaWeb tareaPaginaWeb, TareaBiblioteca tareaBiblioteca, TareaPrograma tareaPrograma, MenuGestor menuGestor, TareaDocumentacion tareaDocumentacion, VentanaInicio ventanaInicio, Modelo modelo, EditarPersona editarPersona, EditarTarea editarTarea) {
         this.altaTarea = altaTarea;
         this.cargarProyecto = cargarProyecto;
@@ -79,6 +55,16 @@ public class Controlador implements ActionListener {
         this.editarTarea=editarTarea;
 
     }
+    public void crearProyecto(){
+        if(!(ventanaInicio.getEntradaNombreProyecto().getText().equals(""))) {
+            menuGestor.setVisible(true);
+            this.modelo = new Modelo(ventanaInicio.getEntradaNombreProyecto().getText());
+            ventanaInicio.setVisible(false);
+        }
+        else{
+            //excepcion nombre vacio implementar
+        }
+    }
 
     public void crearTarea(){
         double costAltaTarea = Double.parseDouble(altaTarea.getEntradaCoste().getText());
@@ -88,6 +74,7 @@ public class Controlador implements ActionListener {
         if (altaTarea.getEntradaCoste().getText() != null && altaTarea.getEntradaIdTarea().getText() != null) {
             modelo.darDeAltaTarea(altaTarea.getEntradaTitulo(), altaTarea.getEntradaDescripcion().getText(), altaTarea.getEntradaResponsable().getText(), prioridad, costAltaTarea, altaTarea.getDesplegableTipoFacturacion().getSelectedIndex(), var, altaTarea.getDesplegableInternoExterno().getSelectedIndex(), altaTarea.getEntradaIdTarea().getText(), numhoras, altaTarea.getDesplegableTipoTarea().getSelectedIndex());
         }
+        menuGestor.actualizarTareas(modelo.getListTareas());
         int num = altaTarea.getDesplegableTipoTarea().getSelectedIndex();
         if (num == 0) {
             tareaBiblioteca.setVisible(true);
@@ -114,8 +101,7 @@ public class Controlador implements ActionListener {
             t.setResultado(biblio);
             tareaBiblioteca.setVisible(false);
             menuGestor.setVisible(true);
-            anyadirTareasGestor();
-            actualizarTareasGestor();
+
         } else {
             System.out.println("Error, no has introducido ningún lenguaje");
         }
@@ -134,11 +120,10 @@ public class Controlador implements ActionListener {
         } else {
             Documentacion doc = new Documentacion(formato, paginas, espacio);
             t.setResultado(doc);
-            actualizarTareasGestor();
+
             menuGestor.setVisible(true);
             tareaDocumentacion.setVisible(false);
-            anyadirTareasGestor();
-            actualizarTareasGestor();
+
         }
     }
 
@@ -151,8 +136,7 @@ public class Controlador implements ActionListener {
             t.setResultado(prog);
             tareaPrograma.setVisible(false);
             menuGestor.setVisible(true);
-            anyadirTareasGestor();
-            actualizarTareasGestor();
+
         } else {
             System.out.println("Error, no has introducido ningún lenguaje");
         }
@@ -171,8 +155,7 @@ public class Controlador implements ActionListener {
         t.setResultado(paginaWeb);
         tareaPaginaWeb.setVisible(false);
         menuGestor.setVisible(true);
-        anyadirTareasGestor();
-        actualizarTareasGestor();
+
     }
 
     public void crearPersona(){
@@ -189,93 +172,124 @@ public class Controlador implements ActionListener {
             }
             darAltaPersona.setVisible(false);
             menuGestor.setVisible(true);
-            anyadirPersonasGestor();
-            actualizarPersonasGestor();
+            menuGestor.actualizarPersonas(modelo.getListaPersonas());
         }
     }
 
-
-
-
-    void actualizarEditarPersona(){
-        editarPersona.getjList1().setModel(listModelTareas);
-    }
-    public void limpiarTareasEditarPersona(){
-        editarPersona.getjList1().removeAll();
-    }
-
-    /** Editar Tarea Actualizar Listas*/
-    public void anyadirEditarTarea( Tarea t){
-        listModelPersonasDeUnaTareaEspecifica.removeAllElements();
-        if(punteroListaPersonasEditarTarea==0){
-            listModelPersonasDeUnaTareaEspecifica.removeAllElements();
+    public void editarTarea(){
+        if(!menuGestor.getListaTareas().isSelectionEmpty()) {
+            punteroListaTareas=menuGestor.getListaTareas().getSelectedIndex();
+            menuGestor.setVisible(false);
+            editarTarea.setVisible(true);
+            editarTarea.actualizarPersonas(modelo.getListaPersonas());
+            editarTarea.actualizarPersonasEspecificas(modelo.getListTareas().get(punteroListaTareas).getPersonasAsignadas());
         }
-        for(int i=0; i<t.getPersonasAsignadas().size();i++){
-            listModelPersonasDeUnaTareaEspecifica.addElement(t.getPersonasAsignadas().get(i));
+        else{
+            //Implementar una excepcion de seleccion vacia
         }
     }
-
-    public void anyadirEditarPersona( Persona p){
-        listModelTareasDeUnaPersonaEspecifica.removeAllElements();
-        if(puntero2==0){
-            listModelTareasDeUnaPersonaEspecifica.removeAllElements();
+    public void anyadirPersonaATarea(){
+        Tarea t=modelo.getListTareas().get(punteroListaTareas); //extraigo la tarea seleccionada a partir del punteroListaTareas del menuGestor
+        if(!editarTarea.getListaPersonas().isSelectionEmpty()) {
+            punteroListaPersonasEditarTarea=editarTarea.getListaPersonas().getSelectedIndex(); //extraigo la persona selccionada de la lista de personas de editarTarea a partir del puntero suyo
+            Persona p=modelo.getListaPersonas().get(punteroListaPersonasEditarTarea);
+            modelo.anyadirPersonaATarea(t,p);
+            editarTarea.actualizarPersonasEspecificas(modelo.getPersonasDeUnaTarea(t));
         }
-        for(int i=0; i<p.getListaTareas().size();i++){
-            listModelTareasDeUnaPersonaEspecifica.addElement(p.getListaTareas().get(i));
+        else{
+            //implementar excepcion de error por no haber seleccionado ninguna persona a añadir
         }
     }
-    public void limpiarPersonasEditarTarea(){
-        editarTarea.getListaPersonas().removeAll();
+
+    public void quitarPersona(){
+        Tarea t=modelo.getListTareas().get(punteroListaTareas); //extraigo la tarea seleccionada a partir del punteroListaTareas del menuGestor
+        if(!editarTarea.getListaPersonasAsignadas().isSelectionEmpty()) {
+            punteroListaPersonasDeUnaTarea=editarTarea.getListaPersonasAsignadas().getSelectedIndex(); //extraigo la persona selccionada de la lista de personas de editarTarea a partir del puntero suyo
+            Persona p=modelo.getListaPersonas().get(punteroListaPersonasDeUnaTarea);
+            modelo.eliminarPersonaDeTarea(t,punteroListaPersonasDeUnaTarea);
+            editarTarea.actualizarPersonasEspecificas(modelo.getPersonasDeUnaTarea(t));
+
+            System.out.println(punteroListaPersonasDeUnaTarea);
+            System.out.println(t.getPersonasAsignadas().toString());
+        }
+        else{
+            //excepcion no haber selccionado ninguna persona a añadir
+        }
+
+    }
+    public void cerrarEditarTarea(){
+        editarTarea.setVisible(false);
+        menuGestor.setVisible(true);
     }
 
-    public void borrarPersonaLista(int index){
-        this.listModelPersonas.remove(index);
-    }
-    public void borrarTareaLista(int index){
-        this.listModelPersonas.remove(index);
-    }
-
-    public void actualizarPersonasEditarTarea(){
-        editarTarea.getListaPersonas().setModel(listModelPersonas);
+    public void setTareaFinalizada(){
+        modelo.setTareaFinalizada(punteroListaTareas);
+        editarTarea.setVisible(false);
+        menuGestor.setVisible(true);
     }
 
-    public void limpiarPersonasEspecificasdeUnaTarea(){
-        editarTarea.getListaPersonasAsignadas().removeAll();
-    }
-    public void actualizarPersonasEspecificasEditarTarea(){
-        editarTarea.getListaPersonasAsignadas().setModel(listModelPersonasDeUnaTareaEspecifica);
+
+    public void editarPersona(){
+        if(!menuGestor.getListaPersonas().isSelectionEmpty()) {
+            punteroListaPersonas=menuGestor.getListaPersonas().getSelectedIndex();
+            menuGestor.setVisible(false);
+            editarPersona.setVisible(true);
+            editarPersona.actualizarTareas(modelo.getListTareas());
+            editarPersona.actualizarTareasEspecificas(modelo.getListaPersonas().get(punteroListaPersonas).getListaTareas());
+        }
+        else{
+            //Implementar una excepcion de seleccion vacia
+        }
     }
 
-    /**GEstor Actualizar Listas*/
+    public void anyadirTareaAPersona(){
+        Persona p=modelo.getListaPersonas().get(punteroListaPersonas); //extraigo la persona seleccionada a partir del punteroListaPersonas del menuGestor
+        if(!editarPersona.getListaTareas().isSelectionEmpty()) {
+            punteroListaTareasEditarPersona=editarPersona.getListaTareas().getSelectedIndex(); //extraigo la tarea selccionada de la lista de tareas de editarPersona a partir del puntero suyo
+            Tarea t=modelo.getListTareas().get(punteroListaTareasEditarPersona);
+            modelo.anyadirTareaAPersona(p,t);
+            editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(p));
+            System.out.println(punteroListaTareasEditarPersona);
+            System.out.println(punteroListaPersonas);
+        }
+        else{
+            //implementar excepcion de error por no haber seleccionado ninguna persona a añadir
+        }
+    }
 
-    public void actualizarPersonasGestor(){
-        menuGestor.getListaPersonas().setModel(listModelPersonas);
-    }
-    public void anyadirPersonasGestor(){
-        listModelPersonas.addElement(modelo.getUltimaPersona().toString());
-    }
-    public void limpiarTareasGestor(){
-        menuGestor.getListaTareas().removeAll();
+    public void quitarTarea(){
+        Persona p=modelo.getListaPersonas().get(punteroListaPersonas); //extraigo la persona seleccionada a partir del punteroListaPersonas del menuGestor
+        if(!editarPersona.getListaTareasAsignadas().isSelectionEmpty()) {
+            punteroListaTareasDeUnaPersona=editarPersona.getListaTareasAsignadas().getSelectedIndex(); //extraigo la persona selccionada de la lista de personas de editarTarea a partir del puntero suyo
+            Tarea t=modelo.getListTareas().get(punteroListaTareasDeUnaPersona);
+            modelo.eliminarTareaDePersona(p,punteroListaTareasDeUnaPersona);
+            editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(p));
+
+            System.out.println(punteroListaTareasDeUnaPersona);
+            System.out.println(p.getListaTareas().toString());
+        }
+        else{
+            //excepcion no haber selccionado ninguna persona a añadir
+        }
     }
 
-    public void actualizarTareasGestor(){
-        menuGestor.getListaTareas().setModel(listModelTareas);
+    public void borrarPersona(){
+        modelo.borrarPersona(punteroListaPersonas);
+        editarPersona.setVisible(false);
+        menuGestor.setVisible(true);
+        System.out.println(punteroListaPersonas);
+        menuGestor.actualizarPersonas(modelo.getListaPersonas());
     }
-    public void anyadirTareasGestor(){
-        listModelTareas.addElement(modelo.getUltimaTarea());
+
+    public void cerrarEditarPersona(){
+        editarPersona.setVisible(false);
+        menuGestor.setVisible(true);
     }
-    public void limpiarPersonasGestor(){
-        menuGestor.getListaPersonas().removeAll();
-    }
+
 
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (ventanaInicio.getBotonCrearProyecto() == evt.getSource()) {
-            menuGestor.setVisible(true);
-            this.modelo = new Modelo(ventanaInicio.getEntradaNombreProyecto().getText());
-            ventanaInicio.setVisible(false);
-        }
         if (ventanaInicio.getBotonAbrirProyecto() == evt.getSource()) {
             if (modelo.getProyecto() != null) {
                 try {
@@ -297,11 +311,7 @@ public class Controlador implements ActionListener {
             }
             System.exit(0); //errpr no guarda el puto proyecto
         }
-        if (menuGestor.getBotonCrearTarea() == evt.getSource()) {
-            altaTarea.setVisible(true);
-            limpiarTareasGestor();
-            menuGestor.setVisible(false);
-        }
+
         if (altaTarea.getBotonCrear() == evt.getSource()) {
             crearTarea();
         }
@@ -317,135 +327,8 @@ public class Controlador implements ActionListener {
         if (tareaPaginaWeb.getBotonCrear() == evt.getSource()) {
             terminarPaginaWeb();
         }
-
         if (darAltaPersona.getBotonAnyadir() == evt.getSource()) {
             crearPersona();
         }
 
-
-        /**   ////////////////////////////////////////EDITAR PERSONA CODIGO ////////////////////////////////////////////////////// */
-
-
-        if (menuGestor.getBotonEditarPersona() == evt.getSource() && !menuGestor.getListaPersonas().isSelectionEmpty()) {
-            //posible fallo por eliminar persona
-            punteroListaPersonas = menuGestor.getListaPersonas().getSelectedIndex();
-            limpiarPersonasGestor();
-            menuGestor.setVisible(false);
-            editarPersona.setVisible(true);
-            actualizarEditarPersona();
-        }
-        if (editarPersona.getBotonBorrarPersona() == evt.getSource()) {
-            editarPersona.setVisible(false);
-            limpiarTareasEditarPersona();
-            borrarPersonaLista(punteroListaPersonas);
-            actualizarPersonasGestor();
-            menuGestor.setVisible(true);
-        }
-        if (editarPersona.getBotonCerrar() == evt.getSource()) {
-            menuGestor.setVisible(true);
-            editarPersona.setVisible(false);
-            actualizarTareasGestor();
-            limpiarTareasEditarPersona();
-        }
-
-        /**   ////////////////////////////////////////EDITAR TAREA CODIGO ////////////////////////////////////////////////////// */
-
-        if (menuGestor.getBotonEditarTarea() == evt.getSource() && !menuGestor.getListaTareas().isSelectionEmpty()) {
-            punteroListaTareas = menuGestor.getListaTareas().getSelectedIndex();
-            limpiarTareasGestor();
-            limpiarPersonasGestor();
-            menuGestor.setVisible(false);
-            editarTarea.setVisible(true);
-            actualizarPersonasEspecificasEditarTarea();
-            actualizarPersonasEditarTarea();
-            listModelPersonasDeUnaTareaEspecifica.removeAllElements();
-            listModelPersonasDeUnaTareaEspecifica.addAll(modelo.getProyecto().getListaTareas().get(punteroListaTareas).getPersonasAsignadas());
-        }
-        if (editarTarea.getBotonDarBajaTarea() == evt.getSource()) {
-            editarTarea.setVisible(false);
-            modelo.setTareaFinalizada(punteroListaTareas);
-            actualizarTareasGestor();
-            actualizarPersonasGestor();
-            limpiarPersonasEditarTarea();
-            limpiarPersonasEspecificasdeUnaTarea();
-            menuGestor.setVisible(true);
-        }
-        if (editarTarea.getBotonCerrar() == evt.getSource()) {
-            menuGestor.setVisible(true);
-            editarTarea.setVisible(false);
-            actualizarTareasGestor();
-            actualizarPersonasGestor();
-            limpiarPersonasEditarTarea();
-            limpiarPersonasEspecificasdeUnaTarea();
-        }
-
-
-
-
-
-        /**   ////////////////////////////////////////EDITAR TAREA BASE DE DATOS CODIGO ////////////////////////////////////////////////////// */
-
-
-        //Añadir persona a tarea
-        if(editarTarea.getBotonAnyadirPersona()==evt.getSource()){
-            if(!editarTarea.getListaPersonas().isSelectionEmpty()) {
-                punteroListaPersonasEditarTarea = editarTarea.getListaPersonas().getSelectedIndex();
-                Tarea tarea = modelo.getProyecto().getListaTareas().get(punteroListaTareas);
-                tarea.anyadirPersonasAsignadas(modelo.getProyecto().getListaPersonas().get(punteroListaPersonasEditarTarea));
-                anyadirEditarTarea(tarea);
-                System.out.println(punteroListaPersonasEditarTarea);
-            }
-        }
-        //Borrar persona de tarea
-        if(editarTarea.getBotonQuitarPersona()==evt.getSource()){
-            if(!editarTarea.getListaPersonasAsignadas().isSelectionEmpty()) {
-                punteroListaPersonasDeUnaTarea = editarTarea.getListaPersonasAsignadas().getSelectedIndex(); //puntero tiene la persona seleccionada
-                Tarea tarea = modelo.getProyecto().getListaTareas().get(punteroListaTareas);
-                tarea.eliminarPersonaAsignada(punteroListaPersonasDeUnaTarea); //eliminar persona que se encuentra seleccionada
-                borrarListaPersonasAsignadasAUnaTarea(tarea);
-                System.out.println(punteroListaPersonasDeUnaTarea);
-
-            }
-        }
-//punteroListaPersonasEditarTarea = puntero2
-        //punteroListaPersonasDeUnaTarea = puntero2
-
-        if(editarPersona.getBotonAnyadirTarea()==evt.getSource()){
-            if(!editarPersona.getjList1().isSelectionEmpty()) {
-                puntero2= editarPersona.getjList1().getSelectedIndex();
-                Persona persona = modelo.getProyecto().getListaPersonas().get(punteroListaPersonas);
-                persona.anyadirTareasAsignadas(modelo.getProyecto().getListaTareas().get(puntero2));
-                anyadirEditarPersona(persona);
-                System.out.println(punteroListaPersonasEditarTarea);
-            }
-        }
-//Borrar persona de tarea
-        if(editarPersona.getBotonQuitarTarea()==evt.getSource()){
-            if(!editarPersona.getListaTareasAsignadas().isSelectionEmpty()) {
-                puntero1 = editarPersona.getListaTareasAsignadas().getSelectedIndex(); //puntero tiene la persona seleccionada
-                Persona persona = modelo.getProyecto().getListaPersonas().get(punteroListaPersonas);
-                persona.eliminarTareaAsignada(puntero1); //eliminar persona que se encuentra seleccionada
-                borrarListaTareaAsignadasAUnaPersona(persona);
-                System.out.println(puntero1);
-
-            }
-        }
-
-
-
-
-/*
-        //Añadir tarea a persona
-        if (editarPersona.getBotonAnyadirTarea()==evt.getSource()){
-            Persona persona= modelo.getProyecto().getListaPersonas().get(menuGestor.getListaPersonas().getSelectedIndex());
-            persona.añadirTareaAPersona(modelo.getProyecto().getListaTareas().get(editarPersona.getjList1().getSelectedIndex()));
-
-        }
-        //Eliminar tarea de persona
-        if(editarPersona.getBotonBorrarPersona()==evt.getSource()){
-            Persona persona= modelo.getProyecto().getListaPersonas().get(menuGestor.getListaPersonas().getSelectedIndex());
-            persona.eliminarTareaDePersona(modelo.getProyecto().getListaTareas().get(editarPersona.getjList1().getSelectedIndex()));
-        }
-
- */
     }}
