@@ -192,6 +192,21 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
         fechaFinalizacion=new Date();
     }
 
+    public String getResultadoToString(){
+        if(resultado.getClass().equals(Biblioteca.class)){
+            return "Biblioteca";
+        }
+        if(resultado.getClass().equals(Documentacion.class)){
+            return "Documentación";
+        }
+        if(resultado.getClass().equals(Programa.class)){
+            return "Programa";
+        }
+        else {
+            return "Pagina Web";
+        }
+    }
+
 
 
 

@@ -5,7 +5,11 @@
  */
 package Vista;
 
+import Controlador.Controlador;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -20,6 +24,54 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void setBotonSalir(JButton botonSalir) {
+        this.botonSalir = botonSalir;
+    }
+
+    public void setLabelCoste(JLabel labelCoste) {
+        this.labelCoste = labelCoste;
+    }
+
+    public void setLabelDescripcion(JLabel labelDescripcion) {
+        this.labelDescripcion = labelDescripcion;
+    }
+
+    public void setLabelEtiquetas(JLabel labelEtiquetas) {
+        this.labelEtiquetas = labelEtiquetas;
+    }
+
+    public void setLabelID(JLabel labelID) {
+        this.labelID = labelID;
+    }
+
+    public void setLabelNumHoras(JLabel labelNumHoras) {
+        this.labelNumHoras = labelNumHoras;
+    }
+
+    public void setLabelPrioridad(JLabel labelPrioridad) {
+        this.labelPrioridad = labelPrioridad;
+    }
+
+    public void setLabelResponsable(JLabel labelResponsable) {
+        this.labelResponsable = labelResponsable;
+    }
+
+    public void setLabelResultado(JLabel labelResultado) {
+        this.labelResultado = labelResultado;
+    }
+
+    public void setLabelTipo(JLabel labelTipo) {
+        this.labelTipo = labelTipo;
+    }
+
+    public void setLabelTipoConsumo(JLabel labelTipoConsumo) {
+        this.labelTipoConsumo = labelTipoConsumo;
+    }
+
+    public void setLabelTitulo(JLabel labelTitulo) {
+        this.labelTitulo = labelTitulo;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,17 +82,17 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel12 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
+        responsable = new javax.swing.JLabel();
+        descripcion = new javax.swing.JLabel();
+        prioridad = new javax.swing.JLabel();
+        tipoConsumo = new javax.swing.JLabel();
+        resultado = new javax.swing.JLabel();
+        ID = new javax.swing.JLabel();
+        numhoras = new javax.swing.JLabel();
+        tipo = new javax.swing.JLabel();
+        etiquetas = new javax.swing.JLabel();
+        coste = new javax.swing.JLabel();
         botonSalir = new javax.swing.JButton();
         labelID = new javax.swing.JLabel();
         labelTitulo = new javax.swing.JLabel();
@@ -54,34 +106,64 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
         labelCoste = new javax.swing.JLabel();
         labelEtiquetas = new javax.swing.JLabel();
 
+        labelID.setText("labelID");
+
+        labelTitulo.setText("labelTitulo");
+
+        labelResponsable.setText("labelResponsable");
+
+        labelDescripcion.setText("labelDescripcion");
+
+        labelNumHoras.setText("labelnumhoras");
+
+        labelPrioridad.setText("labelprioridad");
+
+        labelTipoConsumo.setText("label tipo consumo");
+
+        labelResultado.setText("label resultado");
+
+        labelTipo.setText("label tipo");
+
+        labelCoste.setText("coste");
+
+        labelEtiquetas.setText("etiquetas");
+
         jLabel12.setText("jLabel12");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DATOS TAREA");
 
-        jLabel1.setText("Título:");
+        titulo.setText("Título: ");
 
-        jLabel2.setText("Responsable:");
+        responsable.setText("Responsable: ");
 
-        jLabel3.setText("Descripción:");
+        descripcion.setText("Descripción: ");
 
-        jLabel4.setText("Prioridad:");
+        prioridad.setText("Prioridad: ");
 
-        jLabel5.setText("Tipo de consumo:");
+        tipoConsumo.setText("Tipo de Consumo: ");
 
-        jLabel6.setText("");
+        resultado.setText("Resultado: ");
 
-        jLabel7.setText("");
+        ID.setText("ID: ");
 
-        jLabel8.setText("");
+        numhoras.setText("Número de horas: ");
 
-        jLabel9.setText("");
+        tipo.setText("Tipo");
 
-        jLabel10.setText("Etiquetas:");
+        etiquetas.setText("Etiquetas:");
 
-        jLabel11.setText("Coste:");
+        coste.setText("Coste: ");
 
         botonSalir.setText("SALIR");
+
+        ActionListener cerrarMostrarTareaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.cerrarVerTarea();
+            }
+        };
+        botonSalir.addActionListener(cerrarMostrarTareaListener);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,51 +177,51 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
                                 .addGap(21, 21, 21)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel3)
+                                                .addComponent(descripcion)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(labelDescripcion)
                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
+                                                .addComponent(titulo)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(labelTitulo)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
-                                                .addComponent(jLabel2)
+                                                .addComponent(responsable)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(labelResponsable)
                                                 .addGap(89, 89, 89))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel11)
+                                                                .addComponent(coste)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelCoste))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel10)
+                                                                .addComponent(etiquetas)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelEtiquetas))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel9)
+                                                                .addComponent(tipo)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelTipo))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel7)
+                                                                .addComponent(ID)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(labelID))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel6)
+                                                                .addComponent(resultado)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelResultado))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel5)
+                                                                .addComponent(tipoConsumo)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelTipoConsumo))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel4)
+                                                                .addComponent(prioridad)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelPrioridad)
                                                                 .addGap(73, 73, 73)
-                                                                .addComponent(jLabel8)
+                                                                .addComponent(numhoras)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelNumHoras)))
                                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -149,43 +231,43 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel7)
+                                        .addComponent(ID)
                                         .addComponent(labelID))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jLabel2)
+                                        .addComponent(titulo)
+                                        .addComponent(responsable)
                                         .addComponent(labelTitulo)
                                         .addComponent(labelResponsable))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel3)
+                                        .addComponent(descripcion)
                                         .addComponent(labelDescripcion))
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel8)
+                                        .addComponent(prioridad)
+                                        .addComponent(numhoras)
                                         .addComponent(labelNumHoras)
                                         .addComponent(labelPrioridad))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel5)
+                                        .addComponent(tipoConsumo)
                                         .addComponent(labelTipoConsumo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
+                                        .addComponent(resultado)
                                         .addComponent(labelResultado))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel9)
+                                        .addComponent(tipo)
                                         .addComponent(labelTipo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel11)
+                                        .addComponent(coste)
                                         .addComponent(labelCoste))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel10)
+                                        .addComponent(etiquetas)
                                         .addComponent(labelEtiquetas))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botonSalir)
@@ -198,52 +280,22 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MostrarDatosTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MostrarDatosTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MostrarDatosTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MostrarDatosTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MostrarDatosTarea().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify
     private javax.swing.JButton botonSalir;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel titulo;
+    private javax.swing.JLabel etiquetas;
+    private javax.swing.JLabel coste;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel responsable;
+    private javax.swing.JLabel descripcion;
+    private javax.swing.JLabel prioridad;
+    private javax.swing.JLabel tipoConsumo;
+    private javax.swing.JLabel resultado;
+    private javax.swing.JLabel ID;
+    private javax.swing.JLabel numhoras;
+    private javax.swing.JLabel tipo;
     private javax.swing.JLabel labelCoste;
     private javax.swing.JLabel labelDescripcion;
     private javax.swing.JLabel labelEtiquetas;
@@ -251,6 +303,10 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
 
     public JLabel getLabelCoste() {
         return labelCoste;
+    }
+
+    public void setControlador(Controlador c){
+        controlador=c;
     }
 
     public JLabel getLabelDescripcion() {
@@ -300,11 +356,11 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
     private javax.swing.JLabel labelPrioridad;
 
 
-
     private javax.swing.JLabel labelResponsable;
     private javax.swing.JLabel labelResultado;
     private javax.swing.JLabel labelTipo;
     private javax.swing.JLabel labelTipoConsumo;
     private javax.swing.JLabel labelTitulo;
+    private Controlador controlador;
     // End of variables declaration
 }

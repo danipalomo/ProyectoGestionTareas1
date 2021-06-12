@@ -8,6 +8,13 @@ public class Biblioteca extends ResultadoTarea implements Serializable, Resultad
     private int numModulos;
     public Biblioteca(){
     }
+    public int getNumHoras(){
+        return super.getNumeroEsperadoHoras();
+    }
+    public String getTipoConsumo(){
+        return super.getResultadoInternoExterno();
+    }
+
     public Biblioteca(String id, int numhoras, String tipoResultado){
         super(id,numhoras,tipoResultado);
     }

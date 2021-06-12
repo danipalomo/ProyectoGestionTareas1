@@ -28,6 +28,7 @@ public class Controlador implements ActionListener {
     private Modelo modelo;
     private EditarPersona editarPersona;
     private EditarTarea editarTarea;
+    private MostrarDatosTarea mostrarDatosTarea;
 
     private int punteroListaPersonas; //puntero de la persona seleccionada en el menu gestor
     private int punteroListaTareas; //puntero de la tarea seleccionada en el menu gestor
@@ -40,7 +41,7 @@ public class Controlador implements ActionListener {
 
 
 
-    public Controlador(DarAltaTarea altaTarea, CargarProyecto cargarProyecto, DarAltaPersona darAltaPersona, TareaPaginaWeb tareaPaginaWeb, TareaBiblioteca tareaBiblioteca, TareaPrograma tareaPrograma, MenuGestor menuGestor, TareaDocumentacion tareaDocumentacion, VentanaInicio ventanaInicio, Modelo modelo, EditarPersona editarPersona, EditarTarea editarTarea) {
+    public Controlador(DarAltaTarea altaTarea, CargarProyecto cargarProyecto, DarAltaPersona darAltaPersona, TareaPaginaWeb tareaPaginaWeb, TareaBiblioteca tareaBiblioteca, TareaPrograma tareaPrograma, MenuGestor menuGestor, TareaDocumentacion tareaDocumentacion, VentanaInicio ventanaInicio, Modelo modelo, EditarPersona editarPersona, EditarTarea editarTarea, MostrarDatosTarea mostrarDatosTarea) {
         this.altaTarea = altaTarea;
         this.cargarProyecto = cargarProyecto;
         this.darAltaPersona = darAltaPersona;
@@ -53,6 +54,7 @@ public class Controlador implements ActionListener {
         this.modelo = modelo;
         this.editarPersona=editarPersona;
         this.editarTarea=editarTarea;
+        this.mostrarDatosTarea=mostrarDatosTarea;
 
     }
     public void crearProyecto(){
@@ -285,6 +287,45 @@ public class Controlador implements ActionListener {
         editarPersona.setVisible(false);
         menuGestor.setVisible(true);
     }
+
+    public void verTarea(){
+        if(!menuGestor.getListaTareas().isSelectionEmpty()) {
+            punteroListaTareas=menuGestor.getListaTareas().getSelectedIndex(); //cojo la referencia a la tarea seleccionada en el menu en forma de puntero
+            menuGestor.setVisible(false);
+            mostrarDatosTarea.setVisible(true);
+            mostrarDatosTarea();
+        }
+        else{
+            //excepcion, no se ha seleccionado nada
+        }
+    }
+
+    public void mostrarDatosTarea(){
+        Tarea t=modelo.getListTareas().get(punteroListaTareas);
+        mostrarDatosTarea.getLabelDescripcion().setText(t.getDescripcion());
+        mostrarDatosTarea.getLabelCoste().setText(String.valueOf(t.getCoste())+"€");
+        mostrarDatosTarea.getLabelNumHoras().setText(Integer.toString(t.getResultado().getNumHoras()));
+        mostrarDatosTarea.getLabelResponsable().setText(t.getResponsable());
+        mostrarDatosTarea.getLabelPrioridad().setText(String.valueOf(t.getPrioridad()));
+        mostrarDatosTarea.getLabelTitulo().setText(t.getTitulo());
+        mostrarDatosTarea.getLabelTipoConsumo().setText(t.getResultado().getTipoConsumo());
+        mostrarDatosTarea.getLabelResultado().setText(t.getResultadoToString());
+    }
+
+    public void cerrarVerTarea(){
+        mostrarDatosTarea.setVisible(false);
+        mostrarDatosTarea.getLabelDescripcion().setText("");
+        mostrarDatosTarea.getLabelCoste().setText("");
+        mostrarDatosTarea.getLabelNumHoras().setText("");
+        mostrarDatosTarea.getLabelResponsable().setText("");
+        mostrarDatosTarea.getLabelPrioridad().setText("");
+        mostrarDatosTarea.getLabelTitulo().setText("");
+        mostrarDatosTarea.getLabelTipoConsumo().setText("");
+        mostrarDatosTarea.getLabelResultado().setText("");
+        menuGestor.setVisible(true);
+    }
+
+
 
 
 

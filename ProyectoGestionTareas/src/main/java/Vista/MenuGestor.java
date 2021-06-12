@@ -48,9 +48,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         darAltaPersona=aP;
     }
 
-    public MenuGestor(){
 
-    }
 
     public MenuGestor(boolean c) {
         if(c){initComponents();}
@@ -140,6 +138,8 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
             }
         });
 
+
+
         jScrollPane1.setViewportView(listaTareas);
 
         jScrollPane2.setViewportView(listaPersonas);
@@ -154,6 +154,8 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
             }
         });
 
+
+
         ActionListener editarTareaListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,6 +163,14 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
             }
         };
         botonEditarTarea.addActionListener(editarTareaListener);
+
+        ActionListener verTareaListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.verTarea();
+            }
+        };
+        botonVerTarea.addActionListener(verTareaListener);
 
         ActionListener editarPersonaListener=new ActionListener() {
             @Override

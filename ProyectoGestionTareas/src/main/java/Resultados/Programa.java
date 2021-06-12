@@ -7,6 +7,8 @@ public class Programa extends ResultadoTarea implements Serializable, Resultado 
     private int numLineas;
     private int numModulos;
 
+
+
     public Programa(String id, int numhoras, String tipoResultado){
         super(id,numhoras,tipoResultado);
     }
@@ -14,6 +16,13 @@ public class Programa extends ResultadoTarea implements Serializable, Resultado 
         this.lenguajeEmpleado=lenguajeEmpleado;
         this.numLineas=numLineas;
         this.numModulos=numModulos;
+    }
+
+    public int getNumHoras(){
+        return super.getNumeroEsperadoHoras();
+    }
+    public String getTipoConsumo(){
+        return super.getResultadoInternoExterno();
     }
 
     public void setLenguajeEmpleado(String lenguajeEmpleado) {

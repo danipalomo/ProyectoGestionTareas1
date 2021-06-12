@@ -7,6 +7,13 @@ public class PaginaWeb extends ResultadoTarea implements Serializable, Resultado
     private String lenguaje;
     private String backend;
 
+    public int getNumHoras(){
+        return super.getNumeroEsperadoHoras();
+    }
+    public String getTipoConsumo(){
+        return super.getResultadoInternoExterno();
+    }
+
     public PaginaWeb(String id, int numhoras, String tipoResultado){
         super(id,numhoras,tipoResultado);
     }

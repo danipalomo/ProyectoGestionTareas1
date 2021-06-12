@@ -19,7 +19,8 @@ public class MainGrafico implements Serializable {
         TareaPaginaWeb tareaPaginaWeb=new TareaPaginaWeb();
         EditarPersona editarPersona=new EditarPersona();
         EditarTarea editarTarea=new EditarTarea();
-        Controlador c=new Controlador(darAltaTarea, cargarProyecto, darAltaPersona, tareaPaginaWeb, tareaBiblioteca, tareaPrograma, menu, tareaDocumentacion,ventanaInicio, modelo, editarPersona, editarTarea);
+        MostrarDatosTarea mostrarDatosTarea=new MostrarDatosTarea();
+        Controlador c=new Controlador(darAltaTarea, cargarProyecto, darAltaPersona, tareaPaginaWeb, tareaBiblioteca, tareaPrograma, menu, tareaDocumentacion,ventanaInicio, modelo, editarPersona, editarTarea, mostrarDatosTarea);
         ventanaInicio.setControlador(c);
         menu.setControlador(c);
         darAltaTarea.setControlador(c);
@@ -34,6 +35,8 @@ public class MainGrafico implements Serializable {
         menu.setControlador(c);
 
         editarTarea.setControlador(c);
+
+        mostrarDatosTarea.setControlador(c);
 
         darAltaPersona.setControlador(c);
         tareaDocumentacion.setControlador(c);

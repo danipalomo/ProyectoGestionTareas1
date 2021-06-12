@@ -7,6 +7,13 @@ public class Documentacion extends ResultadoTarea implements Serializable, Resul
     private int numPaginas;
     private double espacioEnDisco;
 
+    public int getNumHoras(){
+        return super.getNumeroEsperadoHoras();
+    }
+    public String getTipoConsumo(){
+        return super.getResultadoInternoExterno();
+    }
+
     public Documentacion(String id, int numhoras, String tipoResultado){
         super(id,numhoras,tipoResultado);
     }
