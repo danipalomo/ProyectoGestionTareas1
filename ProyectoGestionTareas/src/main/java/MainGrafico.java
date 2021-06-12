@@ -1,12 +1,15 @@
+import Clases.Proyecto;
 import Controlador.Controlador;
 import Modelo.Modelo;
 import Vista.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class MainGrafico implements Serializable {
     public static void main(String[] args) {
+
         VentanaInicio ventanaInicio=new VentanaInicio();
         Modelo modelo=new Modelo();
         MenuGestor menu=new MenuGestor(true);

@@ -81,7 +81,12 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
         ActionListener anyadirPersonaListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.anyadirTareaAPersona();
+                if(getListaTareas().isSelectionEmpty()){
+                    setMensajeError("*No se ha seleccionado tarea");
+                } else {
+                    setMensajeError("");
+                    controlador.anyadirTareaAPersona();
+                }
             }
         };
         botonAnyadirTarea.addActionListener(anyadirPersonaListener);
@@ -98,7 +103,12 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
         ActionListener quitarListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.quitarTarea();
+                if(getListaTareasAsignadas().isSelectionEmpty()){
+                    setMensajeError("*No se ha seleccionado tarea asignada");
+                } else {
+                    setMensajeError("");
+                    controlador.quitarTarea();
+                }
             }
         };
         botonQuitarTarea.addActionListener(quitarListener);
@@ -243,8 +253,12 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
         return jScrollPane2;
     }
 
-    public JLabel getLabelError() {
+    public JLabel getMensajeError() {
         return labelError;
+    }
+
+    public void setMensajeError(String labelError){
+        this.labelError.setText(labelError);
     }
 
     public JList<String> getListaTareasAsignadas() {

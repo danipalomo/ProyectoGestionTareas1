@@ -160,7 +160,13 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         ActionListener editarTareaListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.editarTarea();
+                if(getListaTareas().isSelectionEmpty()){
+                    setMensajeError("*Debes seleccionar una tarea");
+                } else {
+                    setMensajeError("");
+                    controlador.editarTarea();
+                }
+
             }
         };
         botonEditarTarea.addActionListener(editarTareaListener);
@@ -168,7 +174,12 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         ActionListener verTareaListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.verTarea();
+                if(getListaTareas().isSelectionEmpty()){
+                    setMensajeError("*Debes seleccionar una tarea");
+                } else {
+                    setMensajeError("");
+                    controlador.verTarea();
+                }
             }
         };
         botonVerTarea.addActionListener(verTareaListener);
@@ -294,6 +305,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         personas.addAll(listapersonas);
         listaPersonas.setModel(personas);
     }
+
 
     // Variables declaration - do not modify
     private javax.swing.JButton botonAnyadirPersona;
