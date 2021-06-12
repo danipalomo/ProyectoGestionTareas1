@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author alemo
  */
-public class CargarProyecto extends javax.swing.JFrame implements Serializable {
+public class  CargarProyecto extends javax.swing.JFrame implements Serializable {
 
     DefaultListModel proyectos=new DefaultListModel();
     /**

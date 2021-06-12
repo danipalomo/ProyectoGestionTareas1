@@ -58,14 +58,9 @@ public class Controlador implements ActionListener {
 
     }
     public void crearProyecto(){
-        if(!(ventanaInicio.getEntradaNombreProyecto().getText().equals(""))) {
-            menuGestor.setVisible(true);
-            this.modelo = new Modelo(ventanaInicio.getEntradaNombreProyecto().getText());
-            ventanaInicio.setVisible(false);
-        }
-        else{
-            //excepcion nombre vacio implementar
-        }
+        menuGestor.setVisible(true);
+        this.modelo = new Modelo(ventanaInicio.getEntradaNombreProyecto().getText());
+        ventanaInicio.setVisible(false);
     }
 
     public void crearTarea(){
@@ -164,18 +159,15 @@ public class Controlador implements ActionListener {
         String dni = darAltaPersona.getEntradaDni().getText();
         String nombre = darAltaPersona.getEntradaNombre().getText();
         String correo = darAltaPersona.getEntradaCorreo().getText();
-        if (dni.equals("") || nombre.equals("")) {
-            System.out.println("Error, no puedes dejar los campos DNI y Nombre vacíos");
-        } else {
-            try {
-                modelo.darDeAltaPersona(dni, nombre, correo);
-            } catch (ListaVaciaException e) {
-                e.printStackTrace();
-            }
-            darAltaPersona.setVisible(false);
-            menuGestor.setVisible(true);
-            menuGestor.actualizarPersonas(modelo.getListaPersonas());
+        if(correo.equals("")) correo="(FALTA CORREO)";
+        try {
+            modelo.darDeAltaPersona(dni, nombre, correo);
+        } catch (ListaVaciaException e) {
+            e.printStackTrace();
         }
+        darAltaPersona.setVisible(false);
+        menuGestor.setVisible(true);
+        menuGestor.actualizarPersonas(modelo.getListaPersonas());
     }
 
     public void editarTarea(){

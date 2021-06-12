@@ -146,7 +146,7 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         labelTipoCoste = new javax.swing.JLabel();
         entradaTipoCoste = new javax.swing.JTextField();
         simboloEuro = new javax.swing.JLabel();
-
+        MensajeError = new javax.swing.JLabel();
         jLabel12.setText("jLabel12");
 
         ActionListener crearListener=new ActionListener() {
@@ -210,11 +210,17 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
 
 
         botonCrear.setText("CREAR");
-        /*botonCrear.addActionListener(new java.awt.event.ActionListener() {
+        botonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCrearActionPerformed(evt);
+                if(getEntradaTitulo().equals("")){
+                    setMensajeError("*El título es obligatorio");
+                }
+                else if(getEntradaResponsable().equals("")){
+                    setMensajeError("*Entrada responsable obligatoria");
+                }
+
             }
-        });*/
+        });
 
         jLabel8.setText("ID Tarea:");
 
@@ -284,6 +290,7 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         });
 
         simboloEuro.setText("€");
+        MensajeError.setForeground(new java.awt.Color(204, 0, 51));
         entradaTipoCoste.setVisible(false);
         simboloEuro.setVisible(false);
         labelTipoCoste.setVisible(false);
@@ -322,45 +329,47 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(jLabel8)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(entradaIdTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(jLabel11)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(entradaAnyadirEtiqueta)))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(jLabel9)
-                                                                                .addGap(9, 9, 9)
-                                                                                .addComponent(spinnerNumHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(jLabel10)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(desplegableTipoTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(4, 4, 4)
-                                                                                .addComponent(botonAnyadirEtiqueta)
-                                                                                .addGap(12, 12, 12)
-                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                        .addComponent(jLabel6)
-                                                                                        .addComponent(labelTipoCoste))
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                                .addComponent(entradaCoste, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(jLabel7))
-                                                                                        .addComponent(entradaTipoCoste)))))
-                                                        .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(jLabel13)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(labelEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(botonCrear)))
+                                                                .addComponent(botonCrear))
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(MensajeError)
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                        .addComponent(jLabel8)
+                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                        .addComponent(entradaIdTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                        .addComponent(jLabel11)
+                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                        .addComponent(entradaAnyadirEtiqueta)))
+                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                        .addComponent(jLabel9)
+                                                                                        .addGap(9, 9, 9)
+                                                                                        .addComponent(spinnerNumHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                        .addComponent(jLabel10)
+                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                        .addComponent(desplegableTipoTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                        .addGap(4, 4, 4)
+                                                                                        .addComponent(botonAnyadirEtiqueta)
+                                                                                        .addGap(12, 12, 12)
+                                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                .addComponent(jLabel6)
+                                                                                                .addComponent(labelTipoCoste))
+                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                                        .addComponent(entradaCoste, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                        .addComponent(jLabel7))
+                                                                                                .addComponent(entradaTipoCoste)))))))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(simboloEuro)))
                                 .addContainerGap(49, Short.MAX_VALUE))
@@ -410,15 +419,15 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
-                                                .addComponent(labelTipoCoste)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(labelTipoCoste))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(entradaTipoCoste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(simboloEuro))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGap(22, 22, 22)
+                                                        .addComponent(simboloEuro))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(MensajeError)
+                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(botonCrear)
@@ -449,6 +458,9 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    public void setMensajeError(String mensajeError){
+        this.MensajeError.setText(mensajeError);
+    }
     private void entradaResponsableActionPerformed(java.awt.event.ActionEvent evt) {
 
         // TODO add your handling code here:
@@ -601,6 +613,7 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         return jLabel9;
     }
 
+    private javax.swing.JLabel MensajeError;
     private javax.swing.JTextField entradaIdTarea;
     private javax.swing.JTextField entradaResponsable;
     private javax.swing.JTextField entradaTipoCoste;

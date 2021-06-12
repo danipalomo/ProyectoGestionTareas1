@@ -42,6 +42,7 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
         jLabel3 = new javax.swing.JLabel();
         entradaCorreo = new javax.swing.JTextField();
         botonAnyadir = new javax.swing.JButton();
+        mensajeError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DAR DE ALTA PERSONA");
@@ -54,12 +55,20 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
 
         botonAnyadir.setText("CREAR PERSONA");
 
+        mensajeError.setForeground(new java.awt.Color(204, 0, 51));
 
 
         ActionListener personaListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.crearPersona();
+                if(getEntradaDni().getText().equals("")){
+                    setMensajeError("*Campo DNI obligatorio");
+                } else if(getEntradaNombre().getText().equals("")){
+                    setMensajeError("*Campo de Nombre obligatorio");
+                } else {
+                    controlador.crearPersona();
+                }
+
             }
         };
         botonAnyadir.addActionListener(personaListener);
@@ -68,25 +77,27 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(253, Short.MAX_VALUE)
+                                .addComponent(botonAnyadir)
+                                .addGap(32, 32, 32))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(entradaDni, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(entradaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(entradaCorreo))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(mensajeError)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(entradaDni, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(jLabel2)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(entradaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(entradaCorreo)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(253, Short.MAX_VALUE)
-                                .addComponent(botonAnyadir)
-                                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,9 +112,11 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel3)
                                         .addComponent(entradaCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(101, 101, 101)
+                                .addGap(39, 39, 39)
+                                .addComponent(mensajeError)
+                                .addGap(46, 46, 46)
                                 .addComponent(botonAnyadir)
-                                .addContainerGap(68, Short.MAX_VALUE))
+                                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();
@@ -122,9 +135,13 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel mensajeError;
 
     public Controlador controlador;
 
+    public void setMensajeError(String mensajeError){
+        this.mensajeError.setText(mensajeError);
+    }
     public JButton getBotonAnyadir() {
         return botonAnyadir;
     }

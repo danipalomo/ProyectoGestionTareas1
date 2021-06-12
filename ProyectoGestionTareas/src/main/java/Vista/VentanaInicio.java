@@ -3,6 +3,7 @@ package Vista;
 import Controlador.Controlador;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
@@ -24,14 +25,15 @@ public class VentanaInicio extends JFrame implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     public void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(276, 0), new java.awt.Dimension(276, 0), new java.awt.Dimension(276, 32767));
-        entradaNombreProyecto = new javax.swing.JTextField();
-        botonCrearProyecto = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        botonAbrirProyecto = new javax.swing.JButton();
+        jLabel2 = new JLabel();
+        filler1 = new Box.Filler(new Dimension(276, 0), new Dimension(276, 0), new Dimension(276, 32767));
+        entradaNombreProyecto = new JTextField();
+        botonCrearProyecto = new JButton();
+        jLabel1 = new JLabel();
+        botonAbrirProyecto = new JButton();
+        mensajeError = new JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         jLabel2.setText("CREAR NUEVO PROYECTO");
 
@@ -42,46 +44,56 @@ public class VentanaInicio extends JFrame implements Serializable {
         ActionListener crearProyectoListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.crearProyecto();
+                if(getEntradaNombreProyecto().getText().equals("")){
+                    setMensajeError("*Nombre de proyecto obligatorio");
+                } else {
+                    controlador.crearProyecto();
+                }
             }
         };
         botonCrearProyecto.addActionListener(crearProyectoListener);
 
+        mensajeError.setForeground(new Color(255, 0, 51));
 
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(filler1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(filler1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(botonAbrirProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(entradaNombreProyecto)))
-                                .addGap(18, 18, 18)
-                                .addComponent(botonCrearProyecto)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(mensajeError)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(botonAbrirProyecto, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(entradaNombreProyecto))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(botonCrearProyecto)))
                                 .addGap(45, 45, 45))
         );
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel1))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(entradaNombreProyecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(entradaNombreProyecto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(botonCrearProyecto))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botonAbrirProyecto)
-                                .addGap(31, 31, 31)
-                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(9, 9, 9)
+                                .addComponent(mensajeError)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(filler1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -116,7 +128,9 @@ public class VentanaInicio extends JFrame implements Serializable {
         controlador=c;
     }
 
-
+    public void setMensajeError(String mensajeError){
+        this.mensajeError.setText(mensajeError);
+    }
 
     // Variables declaration - do not modify
     private javax.swing.Box.Filler filler1;
@@ -126,5 +140,6 @@ public class VentanaInicio extends JFrame implements Serializable {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField entradaNombreProyecto;
     private Controlador controlador;
+    private javax.swing.JLabel mensajeError;
     // End of variables declaration
 }
