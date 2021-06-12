@@ -3,6 +3,8 @@ package Controlador;
 import Clases.Persona;
 import Clases.Tarea;
 import Excepciones.ListaVaciaException;
+import Excepciones.PersonaRepetidaException;
+import Excepciones.TareaRepetidaException;
 import Modelo.Modelo;
 import Resultados.Biblioteca;
 import Resultados.Documentacion;
@@ -61,15 +63,20 @@ public class Controlador implements ActionListener {
         menuGestor.setVisible(true);
         this.modelo = new Modelo(ventanaInicio.getEntradaNombreProyecto().getText());
         ventanaInicio.setVisible(false);
-    }
+    } //bien
 
-    public void crearTarea(){
+    public void crearTarea()  {
         double costAltaTarea = Double.parseDouble(altaTarea.getEntradaCoste().getText());
         int prioridad = (Integer) altaTarea.getSpinnerPrioridad().getValue();
         double var = Double.parseDouble(altaTarea.getEntradaCoste().getText());
         int numhoras = (Integer) altaTarea.getSpinnerPrioridad().getValue();
         if (altaTarea.getEntradaCoste().getText() != null && altaTarea.getEntradaIdTarea().getText() != null) {
-            modelo.darDeAltaTarea(altaTarea.getEntradaTitulo(), altaTarea.getEntradaDescripcion().getText(), altaTarea.getEntradaResponsable().getText(), prioridad, costAltaTarea, altaTarea.getDesplegableTipoFacturacion().getSelectedIndex(), var, altaTarea.getDesplegableInternoExterno().getSelectedIndex(), altaTarea.getEntradaIdTarea().getText(), numhoras, altaTarea.getDesplegableTipoTarea().getSelectedIndex());
+            try {
+                modelo.darDeAltaTarea(altaTarea.getEntradaTitulo(), altaTarea.getEntradaDescripcion().getText(), altaTarea.getEntradaResponsable().getText(), prioridad, costAltaTarea, altaTarea.getDesplegableTipoFacturacion().getSelectedIndex(), var, altaTarea.getDesplegableInternoExterno().getSelectedIndex(), altaTarea.getEntradaIdTarea().getText(), numhoras, altaTarea.getDesplegableTipoTarea().getSelectedIndex());
+            }
+            catch (TareaRepetidaException tareaRepetidaException){
+                tareaRepetidaException.printStackTrace();
+            }
         }
         menuGestor.actualizarTareas(modelo.getListTareas());
         int num = altaTarea.getDesplegableTipoTarea().getSelectedIndex();
@@ -86,26 +93,24 @@ public class Controlador implements ActionListener {
             tareaPrograma.setVisible(true);
             altaTarea.setVisible(false);
         }
-    }
+    } //bien
 
     public void terminarBiblioteca(){
-        Tarea t = modelo.getUltimaTarea();
         ;//devuelve la ultima tarea creada que se encuentra en la posicion size-1 y ademas es la ultima creada en la ventana anterior :)
         int lineas = (Integer) tareaBiblioteca.getSpinnerNumLineas().getValue();
         int modulos = (Integer) tareaBiblioteca.getSpinnerNumModulos().getValue();
         if (!tareaBiblioteca.getEntradaLenguaje().equals("")) {
             Biblioteca biblio = new Biblioteca(tareaBiblioteca.getEntradaLenguaje().getText(), lineas, modulos);
-            t.setResultado(biblio);
+            modelo.setResultado(biblio, modelo.getUltimaTarea());
             tareaBiblioteca.setVisible(false);
             menuGestor.setVisible(true);
 
         } else {
             System.out.println("Error, no has introducido ningún lenguaje");
         }
-    }
+    } //bien
 
     public void terminarDocumentacion(){
-        Tarea t = modelo.getUltimaTarea();
         String formato = tareaDocumentacion.getEntradaFormato().getText();
         Double espacio = Double.parseDouble(tareaDocumentacion.getEntradaEspacio().getText());
         int paginas = (Integer) tareaDocumentacion.getSpinnerNumPaginas().getValue();
@@ -116,8 +121,7 @@ public class Controlador implements ActionListener {
             }
         } else {
             Documentacion doc = new Documentacion(formato, paginas, espacio);
-            t.setResultado(doc);
-
+            modelo.setResultado(doc, modelo.getUltimaTarea());
             menuGestor.setVisible(true);
             tareaDocumentacion.setVisible(false);
 
@@ -125,12 +129,11 @@ public class Controlador implements ActionListener {
     }
 
     public void terminarPrograma(){
-        Tarea t = modelo.getUltimaTarea();//devuelve la ultima tarea creada que se encuentra en la posicion size-1 y ademas es la ultima creada en la ventana anterior :)
         int lineas = (Integer) tareaPrograma.getSpinnerNumLineas().getValue();
         int modulos = (Integer) tareaPrograma.getSpinnerNumModulos().getValue();
         if (!tareaPrograma.getEntradaLenguaje().getText().equals("")) {
             Programa prog = new Programa(tareaPrograma.getEntradaLenguaje().getText(), lineas, modulos);
-            t.setResultado(prog);
+            modelo.setResultado(prog, modelo.getUltimaTarea());
             tareaPrograma.setVisible(false);
             menuGestor.setVisible(true);
 
@@ -140,7 +143,6 @@ public class Controlador implements ActionListener {
     }
 
     public void terminarPaginaWeb(){
-        Tarea t = modelo.getUltimaTarea();
         int tipo = tareaPaginaWeb.getDesplegableEstaticaDinamica().getSelectedIndex();
         String estaticaDinamica = "Dinámica";
         if (tipo == 0) {
@@ -149,11 +151,11 @@ public class Controlador implements ActionListener {
         String lenguaje = tareaPaginaWeb.getEntradaLenguaje().getText();
         String backend = tareaPaginaWeb.getEntradaBackend().getText();
         PaginaWeb paginaWeb = new PaginaWeb(estaticaDinamica, lenguaje, backend);
-        t.setResultado(paginaWeb);
+        modelo.setResultado(paginaWeb, modelo.getUltimaTarea());
         tareaPaginaWeb.setVisible(false);
         menuGestor.setVisible(true);
 
-    }
+    } //bien hasta aqui
 
     public void crearPersona(){
         String dni = darAltaPersona.getEntradaDni().getText();
@@ -162,7 +164,7 @@ public class Controlador implements ActionListener {
         if(correo.equals("")) correo="(FALTA CORREO)";
         try {
             modelo.darDeAltaPersona(dni, nombre, correo);
-        } catch (ListaVaciaException e) {
+        } catch (ListaVaciaException | PersonaRepetidaException e) {
             e.printStackTrace();
         }
         darAltaPersona.setVisible(false);
@@ -183,10 +185,10 @@ public class Controlador implements ActionListener {
         }
     }
     public void anyadirPersonaATarea(){
-        Tarea t=modelo.getListTareas().get(punteroListaTareas); //extraigo la tarea seleccionada a partir del punteroListaTareas del menuGestor
+        Tarea t=modelo.getTarea(punteroListaTareas); //extraigo la tarea seleccionada a partir del punteroListaTareas del menuGestor
         if(!editarTarea.getListaPersonas().isSelectionEmpty()) {
             punteroListaPersonasEditarTarea=editarTarea.getListaPersonas().getSelectedIndex(); //extraigo la persona selccionada de la lista de personas de editarTarea a partir del puntero suyo
-            Persona p=modelo.getListaPersonas().get(punteroListaPersonasEditarTarea);
+            Persona p=modelo.getPersona(punteroListaPersonasEditarTarea);
             modelo.anyadirPersonaATarea(t,p);
             editarTarea.actualizarPersonasEspecificas(modelo.getPersonasDeUnaTarea(t));
         }
@@ -196,10 +198,10 @@ public class Controlador implements ActionListener {
     }
 
     public void quitarPersona(){
-        Tarea t=modelo.getListTareas().get(punteroListaTareas); //extraigo la tarea seleccionada a partir del punteroListaTareas del menuGestor
+        Tarea t=modelo.getTarea(punteroListaTareas); //extraigo la tarea seleccionada a partir del punteroListaTareas del menuGestor
         if(!editarTarea.getListaPersonasAsignadas().isSelectionEmpty()) {
             punteroListaPersonasDeUnaTarea=editarTarea.getListaPersonasAsignadas().getSelectedIndex(); //extraigo la persona selccionada de la lista de personas de editarTarea a partir del puntero suyo
-            Persona p=modelo.getListaPersonas().get(punteroListaPersonasDeUnaTarea);
+            Persona p=modelo.getPersona(punteroListaPersonasDeUnaTarea);
             modelo.eliminarPersonaDeTarea(t,punteroListaPersonasDeUnaTarea);
             editarTarea.actualizarPersonasEspecificas(modelo.getPersonasDeUnaTarea(t));
 
@@ -229,7 +231,7 @@ public class Controlador implements ActionListener {
             menuGestor.setVisible(false);
             editarPersona.setVisible(true);
             editarPersona.actualizarTareas(modelo.getListTareas());
-            editarPersona.actualizarTareasEspecificas(modelo.getListaPersonas().get(punteroListaPersonas).getListaTareas());
+            editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(punteroListaPersonas));
         }
         else{
             //Implementar una excepcion de seleccion vacia
@@ -237,14 +239,12 @@ public class Controlador implements ActionListener {
     }
 
     public void anyadirTareaAPersona(){
-        Persona p=modelo.getListaPersonas().get(punteroListaPersonas); //extraigo la persona seleccionada a partir del punteroListaPersonas del menuGestor
+        Persona p=modelo.getPersona(punteroListaPersonas); //extraigo la persona seleccionada a partir del punteroListaPersonas del menuGestor
         if(!editarPersona.getListaTareas().isSelectionEmpty()) {
             punteroListaTareasEditarPersona=editarPersona.getListaTareas().getSelectedIndex(); //extraigo la tarea selccionada de la lista de tareas de editarPersona a partir del puntero suyo
-            Tarea t=modelo.getListTareas().get(punteroListaTareasEditarPersona);
+            Tarea t=modelo.getTarea(punteroListaTareasEditarPersona);
             modelo.anyadirTareaAPersona(p,t);
             editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(p));
-            System.out.println(punteroListaTareasEditarPersona);
-            System.out.println(punteroListaPersonas);
         }
         else{
             //implementar excepcion de error por no haber seleccionado ninguna persona a añadir
@@ -252,15 +252,13 @@ public class Controlador implements ActionListener {
     }
 
     public void quitarTarea(){
-        Persona p=modelo.getListaPersonas().get(punteroListaPersonas); //extraigo la persona seleccionada a partir del punteroListaPersonas del menuGestor
+        Persona p=modelo.getPersona(punteroListaPersonas); //extraigo la persona seleccionada a partir del punteroListaPersonas del menuGestor
         if(!editarPersona.getListaTareasAsignadas().isSelectionEmpty()) {
             punteroListaTareasDeUnaPersona=editarPersona.getListaTareasAsignadas().getSelectedIndex(); //extraigo la persona selccionada de la lista de personas de editarTarea a partir del puntero suyo
-            Tarea t=modelo.getListTareas().get(punteroListaTareasDeUnaPersona);
+            Tarea t=modelo.getTarea(punteroListaTareasDeUnaPersona);
             modelo.eliminarTareaDePersona(p,punteroListaTareasDeUnaPersona);
             editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(p));
 
-            System.out.println(punteroListaTareasDeUnaPersona);
-            System.out.println(p.getListaTareas().toString());
         }
         else{
             //excepcion no haber selccionado ninguna persona a añadir
@@ -293,7 +291,7 @@ public class Controlador implements ActionListener {
     }
 
     public void mostrarDatosTarea(){
-        Tarea t=modelo.getListTareas().get(punteroListaTareas);
+        Tarea t=modelo.getTarea(punteroListaTareas);
         mostrarDatosTarea.getLabelDescripcion().setText(t.getDescripcion());
         mostrarDatosTarea.getLabelCoste().setText(String.valueOf(t.getCoste())+"€");
         mostrarDatosTarea.getLabelNumHoras().setText(Integer.toString(t.getResultado().getNumHoras()));
@@ -342,7 +340,7 @@ public class Controlador implements ActionListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.exit(0); //errpr no guarda el puto proyecto
+            System.exit(0); //error no guarda el proyecto de mierda joder voy al tanatorio a desahogarme jeje hola  ?
         }
 
         if (altaTarea.getBotonCrear() == evt.getSource()) {

@@ -34,14 +34,15 @@ public class Modelo implements Serializable{
         return proyecto.getListaPersonas();
     }
 
-    public void darDeAltaPersona(String dni, String nombre, String correo) throws ListaVaciaException {
+    public void darDeAltaPersona(String dni, String nombre, String correo) throws ListaVaciaException, PersonaRepetidaException {
         Persona nuevaPersona= new Persona(dni, nombre, correo);
-        try {
-            proyecto.anyadirPersona(nuevaPersona);
-        } catch (ListaVaciaException listaVaciaException) {
-            listaVaciaException.printStackTrace();
+        if(sePuedeAnyadir(nuevaPersona)) {
+            try {
+                proyecto.anyadirPersona(nuevaPersona);
+            } catch (ListaVaciaException listaVaciaException) {
+                listaVaciaException.printStackTrace();
+            }
         }
-
     }
     public String nombreTarea(int index){
         return proyecto.getListaTareas().get(index).toString();
@@ -57,14 +58,16 @@ public class Modelo implements Serializable{
         }
         return null;
     }
-    public void darDeAltaTarea(String titulo, String descripcion, String responsable, int prioridad, double coste, int facturacion,double var, int resultado, String id, int horas, int tipo  ){
+    public void darDeAltaTarea(String titulo, String descripcion, String responsable, int prioridad, double coste, int facturacion,double var, int resultado, String id, int horas, int tipo  ) throws TareaRepetidaException{
 
         Tarea tarea=new Tarea(titulo,descripcion,responsable,prioridad, coste, facturacion, var, resultado, id, horas, tipo);
-
-        try {
-            proyecto.anyadirTarea(tarea);
-        } catch (ListaVaciaException listaVaciaException) {
-            listaVaciaException.printStackTrace();
+        sePuedeAnyadir(tarea);
+        if(sePuedeAnyadir(tarea)) {
+            try {
+                proyecto.anyadirTarea(tarea);
+            } catch (ListaVaciaException listaVaciaException) {
+                listaVaciaException.printStackTrace();
+            }
         }
 
     }
@@ -151,6 +154,27 @@ public class Modelo implements Serializable{
         return null;
     }
 
+    public boolean sePuedeAnyadir(Persona p){
+        String dni=p.getDni();
+        String correo=p.getCorreo();
+        for(Persona personas:proyecto.getListaPersonas()){
+            if(personas.getCorreo().equals(correo) || personas.getDni().equals(dni)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean sePuedeAnyadir(Tarea t){
+        String titulo=t.getTitulo();
+        for(Tarea tareas:proyecto.getListaTareas()){
+            if(tareas.getTitulo().equals(titulo)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void eliminarPersonaDeTarea(Tarea t, int index){
         t.eliminarPersonasAsignadas(index);
     }
@@ -162,7 +186,24 @@ public class Modelo implements Serializable{
     public ArrayList<Tarea> getTareasDeUnaPersona(Persona p){
         return p.getListaTareas();
     }
+
+    public ArrayList<Persona> getPersonasDeUnaTarea(int index){
+        return proyecto.getListaTareas().get(index).getPersonasAsignadas();
+    }
+
+    public ArrayList<Tarea> getTareasDeUnaPersona(int index){
+        return proyecto.getListaPersonas().get(index).getListaTareas();
+    }
     public void eliminarTareaDePersona(Persona p, int index){
         p.eliminarTareaAsignada(index);
+    }
+    public void setResultado(Resultado r, Tarea t){
+       t.setResultado(r);
+    }
+    public Tarea getTarea(int index){
+        return proyecto.getListaTareas().get(index);
+    }
+    public Persona getPersona(int index){
+        return proyecto.getListaPersonas().get(index);
     }
 }
