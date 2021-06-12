@@ -152,7 +152,8 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         ActionListener crearListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.crearTarea();
+
+
             }
         };
        botonCrear.addActionListener(crearListener);
@@ -215,8 +216,14 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
                 if(getEntradaTitulo().equals("")){
                     setMensajeError("*El título es obligatorio");
                 }
-                else if(getEntradaResponsable().equals("")){
+                else if(getEntradaResponsable().getText().equals("")){
                     setMensajeError("*Entrada responsable obligatoria");
+                } else if(getEntradaCoste().getText().equals("")){
+                    setMensajeError("*El coste es un campo obligatorio");
+                } else if(!getEntradaCoste().getText().matches("[+-]?\\d*(\\.\\d+)?")){
+                    setMensajeError("*El coste debe ser un número");
+                } else {
+                    controlador.crearTarea();
                 }
 
             }

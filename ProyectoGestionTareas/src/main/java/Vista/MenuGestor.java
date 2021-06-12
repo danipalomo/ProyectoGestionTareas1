@@ -111,6 +111,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         botonEditarTarea = new javax.swing.JButton();
         botonEditarPersona = new javax.swing.JButton();
         botonVerTarea = new javax.swing.JButton();
+        mensajeError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MENÚ PRINCIPAL");
@@ -175,41 +176,52 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         ActionListener editarPersonaListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.editarPersona();
+                if(getListaPersonas().isSelectionEmpty()){
+                    setMensajeError("*Debes seleccionar una persona");
+                } else {
+                    setMensajeError("");
+                    controlador.editarPersona();
+                }
+
             }
         };
         botonEditarPersona.addActionListener(editarPersonaListener);
 
         botonVerTarea.setText("VER TAREA");
 
+        mensajeError.setForeground(new java.awt.Color(204, 0, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botonGuardarYSalir)
-                                .addContainerGap())
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(57, 57, 57)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(botonVerTarea)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(botonEditarTarea))
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                        .addComponent(botonCrearTarea, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(74, 74, 74)
+                                                .addComponent(mensajeError)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(botonGuardarYSalir)
+                                                .addContainerGap())
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(botonVerTarea)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(botonEditarTarea))
+                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                                        .addComponent(botonCrearTarea, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                                        .addComponent(botonAnyadirPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(54, 54, 54))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(116, 116, 116)
-                                                .addComponent(botonEditarPersona)
-                                                .addGap(87, 87, 87))))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(74, 74, 74)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                                                        .addComponent(botonAnyadirPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                .addGap(54, 54, 54))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addGap(116, 116, 116)
+                                                                .addComponent(botonEditarPersona)
+                                                                .addGap(87, 87, 87))))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,8 +240,13 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
                                                 .addComponent(botonEditarTarea)
                                                 .addComponent(botonVerTarea))
                                         .addComponent(botonEditarPersona))
-                                .addGap(22, 22, 22)
-                                .addComponent(botonGuardarYSalir)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(botonGuardarYSalir))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(mensajeError)))
                                 .addContainerGap())
         );
 
@@ -241,7 +258,9 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         this.setVisible(false);
         // TODO add your handling code here:
     }
-
+    public void setMensajeError(String mensajeError){
+        this.mensajeError.setText(mensajeError);
+    }
     private void botonAnyadirPersonaActionPerformed(java.awt.event.ActionEvent evt) {
         darAltaPersona.setVisible(true);
         this.setVisible(false);
@@ -287,5 +306,6 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> listaPersonas;
     private javax.swing.JList<String> listaTareas;
+    private javax.swing.JLabel mensajeError;
     // End of variables declaration
 }

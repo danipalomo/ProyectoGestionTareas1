@@ -155,7 +155,7 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
 
         coste.setText("Coste: ");
 
-        botonSalir.setText("SALIR");
+        botonSalir.setText("VOLVER");
 
         ActionListener cerrarMostrarTareaListener=new ActionListener() {
             @Override
