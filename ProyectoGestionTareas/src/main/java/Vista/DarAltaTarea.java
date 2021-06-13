@@ -450,7 +450,8 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }
     public void desplegableTipoFacturacionActionPerformed(ActionEvent evt) {
-        if (getDesplegableTipoFacturacion().getSelectedIndex() == 0) {
+        int indice=getDesplegableTipoFacturacion().getSelectedIndex();
+        if (indice == 0) {
             getLabelTipoCoste().setVisible(false);
             getEntradaTipoCoste().setText("0");
             getEntradaTipoCoste().setVisible(false);
@@ -459,6 +460,9 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
             getLabelTipoCoste().setVisible(true);
             getEntradaTipoCoste().setVisible(true);
             getSimboloEuro().setVisible(true);
+            if(indice==1){
+                getLabelTipoCoste().setText("Descuento:");
+            } else getLabelTipoCoste().setText("Sobrecoste:");
         }
     }
 
@@ -513,7 +517,7 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
 
     private void botonAnyadirEtiquetaActionPerformed(java.awt.event.ActionEvent evt) {
         etiquetas.add(entradaAnyadirEtiqueta.getText());
-        labelEtiquetas.setText(labelEtiquetas.getText() + entradaAnyadirEtiqueta.getText()+"\n");
+        labelEtiquetas.setText(labelEtiquetas.getText() + " " + entradaAnyadirEtiqueta.getText());
         entradaAnyadirEtiqueta.setText("");
 
 

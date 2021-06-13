@@ -149,7 +149,7 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
 
         numhoras.setText("Número de horas: ");
 
-        tipo.setText("Tipo");
+        tipo.setText("");
 
         etiquetas.setText("Etiquetas:");
 

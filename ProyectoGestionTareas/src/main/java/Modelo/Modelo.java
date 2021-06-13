@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Modelo implements Serializable{
+public class Modelo implements Serializable, ModeloInterfaz{
     private  String nombreProyecto;
     private  Proyecto proyecto;
     static Scanner sc =new Scanner(System.in);
@@ -141,10 +141,16 @@ public class Modelo implements Serializable{
     }
 
     public void anyadirPersonaATarea(Tarea t, Persona p) {
-        t.anyadirPersonasAsignadas(p);
+        if(sePuedeAnyadirPersonaATarea(p,t)) {
+            t.anyadirPersonasAsignadas(p);
+            p.añadirTareaAPersona(t);
+        }
     }
     public void anyadirTareaAPersona(Persona p, Tarea t) {
-        p.anyadirTareasAsignadas(t);
+        if(sePuedeAnyadirTareaAPersona(t,p)) {
+            p.anyadirTareasAsignadas(t);
+            t.anyadirPersonasAsignadas(p);
+        }
     }
 
 
@@ -156,6 +162,23 @@ public class Modelo implements Serializable{
             return proyecto.getListaTareas().get(proyecto.getListaTareas().size() - 1);
         }
         return null;
+    }
+    public boolean sePuedeAnyadirPersonaATarea(Persona p, Tarea t){
+        for(Persona personas:t.getPersonasAsignadas()){
+            if(personas.getDni().equals(p.getDni())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean sePuedeAnyadirTareaAPersona(Tarea t, Persona p){
+        for(Tarea tareas:p.getListaTareas()){
+            if(tareas.getTitulo().equals(t.getTitulo())){
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean sePuedeAnyadir(Persona p){

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.lang.*;
 
-public class Controlador implements ActionListener, Serializable {
+public class Controlador implements ActionListener, Serializable, ControladorInterfaz {
     private DarAltaTarea altaTarea;
     private CargarProyecto cargarProyecto;
     private DarAltaPersona darAltaPersona;
