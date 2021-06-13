@@ -16,7 +16,7 @@ import Controlador.*;
  *
  * @author alemo
  */
-public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable {
+public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable, Resultados {
 
     /**
      * Creates new form TareaPaginaWeb

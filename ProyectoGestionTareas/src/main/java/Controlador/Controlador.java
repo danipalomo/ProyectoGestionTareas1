@@ -397,7 +397,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             }
         }
 
-        if (tareaBiblioteca.getBotonTerminar() == evt.getSource()) {
+        if (tareaBiblioteca.getBotonCrear() == evt.getSource()) {
             terminarBiblioteca();
         }
         if (tareaPrograma.getBotonTerminar() == evt.getSource()) {
