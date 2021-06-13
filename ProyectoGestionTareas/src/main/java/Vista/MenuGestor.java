@@ -6,6 +6,7 @@
 package Vista;
 
 import Clases.Persona;
+import Clases.Proyecto;
 import Clases.Tarea;
 import Controlador.Controlador;
 import Modelo.Modelo;
@@ -15,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -135,6 +137,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         botonGuardarYSalir.setText("GUARDAR Y SALIR");
         botonGuardarYSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+
                 botonGuardarYSalirActionPerformed(evt);
             }
         });
@@ -286,6 +289,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
 
     private void botonGuardarYSalirActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
     }
 
     /**

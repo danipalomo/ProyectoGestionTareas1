@@ -53,6 +53,14 @@ public class VentanaInicio extends JFrame implements Serializable {
         };
         botonCrearProyecto.addActionListener(crearProyectoListener);
 
+        ActionListener abrirProyectoListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.abrirProyecto();
+            }
+        };
+        botonAbrirProyecto.addActionListener(abrirProyectoListener);
+
         mensajeError.setForeground(new Color(255, 0, 51));
 
 

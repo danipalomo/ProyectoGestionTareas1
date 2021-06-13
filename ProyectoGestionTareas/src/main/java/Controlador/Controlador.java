@@ -1,6 +1,7 @@
 package Controlador;
 
 import Clases.Persona;
+import Clases.Proyecto;
 import Clases.Tarea;
 import Excepciones.ListaVaciaException;
 import Excepciones.PersonaRepetidaException;
@@ -17,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controlador implements ActionListener {
     private DarAltaTarea altaTarea;
@@ -32,6 +34,7 @@ public class Controlador implements ActionListener {
     private EditarPersona editarPersona;
     private EditarTarea editarTarea;
     private MostrarDatosTarea mostrarDatosTarea;
+    private HashMap<String, Proyecto> mapaProyectos=new HashMap<>();
 
     private int punteroListaPersonas; //puntero de la persona seleccionada en el menu gestor
     private int punteroListaTareas; //puntero de la tarea seleccionada en el menu gestor
@@ -73,6 +76,10 @@ public class Controlador implements ActionListener {
         ventanaInicio.setVisible(false);
     } //bien
 
+    public void abrirProyecto(){
+        cargarProyecto.setVisible(true);
+        ventanaInicio.setVisible(false);
+    }
     public void crearTarea()  {
         double costAltaTarea = Double.parseDouble(altaTarea.getEntradaCoste().getText());
         int prioridad = (Integer) altaTarea.getSpinnerPrioridad().getValue();
