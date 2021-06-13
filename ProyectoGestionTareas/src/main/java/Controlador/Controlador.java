@@ -94,6 +94,11 @@ public class Controlador implements ActionListener {
             }
         }
         menuGestor.actualizarTareas(modelo.getListTareas());
+        String internoExterno="Interno";
+        if(altaTarea.getDesplegableInternoExterno().getSelectedIndex()==1){
+            internoExterno="Externo";
+        }
+        modelo.addResultados(internoExterno);
         int num = altaTarea.getDesplegableTipoTarea().getSelectedIndex();
         if (num == 0) {
             tareaBiblioteca.setVisible(true);
@@ -108,6 +113,7 @@ public class Controlador implements ActionListener {
             tareaPrograma.setVisible(true);
             altaTarea.setVisible(false);
         }
+        System.out.println(modelo.getUltimaTarea().getInternoExterno());
     } //bien
 
     public void terminarBiblioteca(){
@@ -119,6 +125,7 @@ public class Controlador implements ActionListener {
             modelo.setResultado(biblio, modelo.getUltimaTarea());
             tareaBiblioteca.setVisible(false);
             menuGestor.setVisible(true);
+            System.out.println(modelo.getUltimaTarea().getInternoExterno());
 
         } else {
             System.out.println("Error, no has introducido ningún lenguaje");
@@ -307,15 +314,36 @@ public class Controlador implements ActionListener {
     }
 
     public void mostrarDatosTarea(){
+        System.out.println(modelo.getUltimaTarea().getInternoExterno());
         Tarea t=modelo.getTarea(punteroListaTareas);
-        mostrarDatosTarea.getLabelDescripcion().setText(t.getDescripcion());
+
+        if(!modelo.getDescripcion(punteroListaTareas).equals("")){
+            mostrarDatosTarea.getLabelDescripcion().setText(t.getDescripcion());
+        }
+        else{
+            mostrarDatosTarea.getLabelDescripcion().setText("(Falta descripción)");
+        }
+
+        if(!modelo.getID(punteroListaTareas).equals("")){
+            mostrarDatosTarea.getLabelID().setText(modelo.getID(punteroListaTareas));
+        }
+        else{
+            mostrarDatosTarea.getLabelID().setText("(Falta id)");
+        }
+
         mostrarDatosTarea.getLabelCoste().setText(String.valueOf(t.getCoste())+"€");
+        mostrarDatosTarea.getLabelResponsable().setText(modelo.getResponsable(punteroListaTareas));
         mostrarDatosTarea.getLabelNumHoras().setText(Integer.toString(t.getResultado().getNumHoras()));
-        mostrarDatosTarea.getLabelResponsable().setText(t.getResponsable());
         mostrarDatosTarea.getLabelPrioridad().setText(String.valueOf(t.getPrioridad()));
         mostrarDatosTarea.getLabelTitulo().setText(t.getTitulo());
-        mostrarDatosTarea.getLabelTipoConsumo().setText(t.getResultado().getTipoConsumo());
+        mostrarDatosTarea.getLabelTipoConsumo().setText(modelo.getResultado(punteroListaTareas));
         mostrarDatosTarea.getLabelResultado().setText(t.getResultadoToString());
+        mostrarDatosTarea.getLabelTipo().setText(modelo.getTipoTarea(punteroListaTareas));
+        System.out.println(modelo.getResultado(punteroListaTareas));
+    }
+
+    public void setFalta(JLabel label, String g){
+        label.setText("(FALTA "+g+")");
     }
 
     public void cerrarVerTarea(){

@@ -25,6 +25,7 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
     private Etiquetas etiquetas;
     private double coste;
     private Facturacion facturacion;
+    private String id;
 
 
     //####CONSTRUCTOR####
@@ -37,6 +38,8 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
         this.fechaCreacion= new Date();
         this.esFinalizada=false;
         this.coste=coste;
+        this.id=id;
+        this.fechaCreacion=new Date();
 
         String internoExterno="Interno";
         if(resultado==1){
@@ -106,6 +109,7 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
 
     public void setEsFinalizada(boolean esFinalizada) {
         this.esFinalizada = esFinalizada;
+        this.fechaFinalizacion=new Date();
     }
 
     public void setEtiquetas(Etiquetas etiquetas) {
@@ -187,9 +191,13 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
         this.coste=coste;
     }
 
-    public void finalizarTarea(){
-        esFinalizada=true;
-        fechaFinalizacion=new Date();
+
+    public String getId(){
+        return id;
+    }
+
+    public String getInternoExterno(){
+        return this.resultado.getTipoConsumo();
     }
 
     public String getResultadoToString(){
@@ -206,6 +214,7 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
             return "Pagina Web";
         }
     }
+
 
 
 

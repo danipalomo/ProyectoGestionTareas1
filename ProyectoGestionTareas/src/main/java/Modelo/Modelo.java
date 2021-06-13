@@ -9,6 +9,7 @@ import Vista.MenuGestor;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -174,9 +175,22 @@ public class Modelo implements Serializable{
         }
         return true;
     }
+    private ArrayList<String> resultados=new ArrayList<>();
 
     public void eliminarPersonaDeTarea(Tarea t, int index){
         t.eliminarPersonasAsignadas(index);
+    }
+
+    public String getResultado(int index){
+        return resultados.get(index);
+    }
+
+    public void addResultados(String s){
+        resultados.add(s);
+    }
+
+    public void quitarResultado(int index){
+        resultados.remove(index);
     }
 
     public ArrayList<Persona> getPersonasDeUnaTarea(Tarea t){
@@ -206,4 +220,20 @@ public class Modelo implements Serializable{
     public Persona getPersona(int index){
         return proyecto.getListaPersonas().get(index);
     }
+    public String getID(int index){
+        return proyecto.getListaTareas().get(index).getId();
+    }
+    public String getTipoTarea(int index){
+        return proyecto.getListaTareas().get(index).getInternoExterno();
+    }
+    public String getDescripcion(int index){
+        return proyecto.getListaTareas().get(index).getDescripcion();
+    }
+    public Date getFechaCreacion(int index){
+        return proyecto.getListaTareas().get(index).getFechaCreacion();
+    }
+    public String getResponsable(int index){
+        return proyecto.getListaTareas().get(index).getResponsable();
+    }
+
 }
