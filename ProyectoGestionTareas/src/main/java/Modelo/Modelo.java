@@ -84,13 +84,7 @@ public class Modelo implements Serializable{
         this.proyecto=proyecto;
     }
 
-    public void guardarProyecto() throws IOException {
-        FileOutputStream fos = new FileOutputStream("src/main/java/agenda.ser");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(this);
-        oos.close();
-        cerrarPrograma=true;
-    }
+
 
     public String getNombreProyecto() {
         return nombreProyecto;
@@ -120,11 +114,23 @@ public class Modelo implements Serializable{
 
 
     public  Proyecto cargarProyecto() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream("src/main/java/agenda.ser");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        proyecto = (Proyecto) ois.readObject();
-        ois.close();
+        try {
+            FileInputStream fis = new FileInputStream("agenda.bin");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            proyecto = (Proyecto) ois.readObject();
+            ois.close();
+        }catch(ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
+        }
         return proyecto;
+    }
+
+    public void guardarProyecto() throws IOException {
+        FileOutputStream fos = new FileOutputStream("agenda.bin");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this);
+        oos.close();
+
     }
 
     public void pedirNombreTarea(){
@@ -159,7 +165,7 @@ public class Modelo implements Serializable{
         String dni=p.getDni();
         String correo=p.getCorreo();
         for(Persona personas:proyecto.getListaPersonas()){
-            if(personas.getCorreo().equals(correo) || personas.getDni().equals(dni)){
+            if((personas.getCorreo().equals(correo) && !personas.getCorreo().equals("(FALTA CORREO)")) || personas.getDni().equals(dni)){
                 return false;
             }
         }
@@ -234,6 +240,16 @@ public class Modelo implements Serializable{
     }
     public String getResponsable(int index){
         return proyecto.getListaTareas().get(index).getResponsable();
+    }
+    public void addEtiqueta(String s, Tarea t){
+        t.anyadirEtiqueta(s);
+    }
+    public String getEtiquetas(int index){
+        String etiquetas="";
+        for(int i=0; i<proyecto.getListaTareas().get(index).getEtiquetas().size();i++){
+            etiquetas+="#"+(proyecto.getListaTareas().get(index).getEtiquetas().get(i)+" ");
+        }
+        return etiquetas;
     }
 
 }

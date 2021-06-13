@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Serializable;
 
 public class VentanaInicio extends JFrame implements Serializable {
@@ -56,10 +57,17 @@ public class VentanaInicio extends JFrame implements Serializable {
         ActionListener abrirProyectoListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlador.abrirProyecto();
+                try {
+                    controlador.cargarProyecto();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
             }
         };
         botonAbrirProyecto.addActionListener(abrirProyectoListener);
+
 
         mensajeError.setForeground(new Color(255, 0, 51));
 

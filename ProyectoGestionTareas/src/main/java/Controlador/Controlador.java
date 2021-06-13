@@ -17,10 +17,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.lang.*;
 
-public class Controlador implements ActionListener {
+public class Controlador implements ActionListener, Serializable {
     private DarAltaTarea altaTarea;
     private CargarProyecto cargarProyecto;
     private DarAltaPersona darAltaPersona;
@@ -34,12 +36,7 @@ public class Controlador implements ActionListener {
     private EditarPersona editarPersona;
     private EditarTarea editarTarea;
     private MostrarDatosTarea mostrarDatosTarea;
-
-    public ArrayList<Proyecto> getListaProyectosGuardados() {
-        return listaProyectosGuardados;
-    }
-
-    private ArrayList<Proyecto> listaProyectosGuardados=new ArrayList<>();
+    private HashMap<String, Proyecto> mapaProyectos=new HashMap<>();
 
     private int punteroListaPersonas; //puntero de la persona seleccionada en el menu gestor
     private int punteroListaTareas; //puntero de la tarea seleccionada en el menu gestor
@@ -85,19 +82,24 @@ public class Controlador implements ActionListener {
         cargarProyecto.setVisible(true);
         ventanaInicio.setVisible(false);
     }
-    public void crearTarea()  {
+
+    public void crearTarea(ArrayList<String> etiquetas)  {
         double costAltaTarea = Double.parseDouble(altaTarea.getEntradaCoste().getText());
         int prioridad = (Integer) altaTarea.getSpinnerPrioridad().getValue();
         double var = Double.parseDouble(altaTarea.getEntradaCoste().getText());
         int numhoras = (Integer) altaTarea.getSpinnerPrioridad().getValue();
         if (altaTarea.getEntradaCoste().getText() != null && altaTarea.getEntradaIdTarea().getText() != null) {
             try {
-                modelo.darDeAltaTarea(altaTarea.getEntradaTitulo(), altaTarea.getEntradaDescripcion().getText(), altaTarea.getEntradaResponsable().getText(), prioridad, costAltaTarea, altaTarea.getDesplegableTipoFacturacion().getSelectedIndex(), var, altaTarea.getDesplegableInternoExterno().getSelectedIndex(), altaTarea.getEntradaIdTarea().getText(), numhoras, altaTarea.getDesplegableTipoTarea().getSelectedIndex());
+                modelo.darDeAltaTarea(altaTarea.getEntradaTitulo().getText(), altaTarea.getEntradaDescripcion().getText(), altaTarea.getEntradaResponsable().getText(), prioridad, costAltaTarea, altaTarea.getDesplegableTipoFacturacion().getSelectedIndex(), var, altaTarea.getDesplegableInternoExterno().getSelectedIndex(), altaTarea.getEntradaIdTarea().getText(), numhoras, altaTarea.getDesplegableTipoTarea().getSelectedIndex());
             }
             catch (TareaRepetidaException tareaRepetidaException){
                 tareaRepetidaException.printStackTrace();
             }
         }
+        for(String e:etiquetas){
+            modelo.addEtiqueta(e, modelo.getUltimaTarea());
+        }
+
         menuGestor.actualizarTareas(modelo.getListTareas());
         String internoExterno="Interno";
         if(altaTarea.getDesplegableInternoExterno().getSelectedIndex()==1){
@@ -118,15 +120,15 @@ public class Controlador implements ActionListener {
             tareaPrograma.setVisible(true);
             altaTarea.setVisible(false);
         }
-        System.out.println(modelo.getUltimaTarea().getInternoExterno());
+        limpiarAltaTarea();
     } //bien
-    public void abrirProyecto(Proyecto p){
-        modelo.setProyecto(p);
 
+    public void limpiarAltaTarea(){
+        altaTarea.getEntradaIdTarea().setText("");
+        altaTarea.getEntradaResponsable().setText("");
+        altaTarea.getEntradaCoste().setText("");
     }
-    public void guardarProyectoEnListaProyectos(Proyecto p){
-        listaProyectosGuardados.add(p);
-    }
+
     public void terminarBiblioteca(){
         ;//devuelve la ultima tarea creada que se encuentra en la posicion size-1 y ademas es la ultima creada en la ventana anterior :)
         int lineas = (Integer) tareaBiblioteca.getSpinnerNumLineas().getValue();
@@ -136,7 +138,7 @@ public class Controlador implements ActionListener {
             modelo.setResultado(biblio, modelo.getUltimaTarea());
             tareaBiblioteca.setVisible(false);
             menuGestor.setVisible(true);
-            System.out.println(modelo.getUltimaTarea().getInternoExterno());
+
 
         } else {
             System.out.println("Error, no has introducido ningún lenguaje");
@@ -218,6 +220,8 @@ public class Controlador implements ActionListener {
             //Implementar una excepcion de seleccion vacia
         }
     }
+
+
     public void anyadirPersonaATarea(){
         Tarea t=modelo.getTarea(punteroListaTareas); //extraigo la tarea seleccionada a partir del punteroListaTareas del menuGestor
         if(!editarTarea.getListaPersonas().isSelectionEmpty()) {
@@ -350,6 +354,7 @@ public class Controlador implements ActionListener {
         mostrarDatosTarea.getLabelTipoConsumo().setText(modelo.getResultado(punteroListaTareas));
         mostrarDatosTarea.getLabelResultado().setText(t.getResultadoToString());
         mostrarDatosTarea.getLabelTipo().setText(modelo.getTipoTarea(punteroListaTareas));
+        mostrarDatosTarea.getLabelEtiquetas().setText(modelo.getEtiquetas(punteroListaTareas));
         System.out.println(modelo.getResultado(punteroListaTareas));
     }
 
@@ -370,7 +375,22 @@ public class Controlador implements ActionListener {
         menuGestor.setVisible(true);
     }
 
+    public void cargarProyecto() throws IOException, ClassNotFoundException {
+        try {
+            modelo.cargarProyecto();
+        }catch (ClassNotFoundException classNotFoundException){
+            classNotFoundException.printStackTrace();
+        }
+    }
 
+    public void guardarProyecto() throws IOException {
+        try {
+            modelo.guardarProyecto();
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+        }
+        System.exit(0);
+    }
 
 
 
@@ -398,9 +418,6 @@ public class Controlador implements ActionListener {
             System.exit(0); //error no guarda el proyecto de mierda joder voy al tanatorio a desahogarme jeje hola  ?
         }
 
-        if (altaTarea.getBotonCrear() == evt.getSource()) {
-            crearTarea();
-        }
         if (tareaBiblioteca.getBotonTerminar() == evt.getSource()) {
             terminarBiblioteca();
         }

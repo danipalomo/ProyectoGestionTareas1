@@ -214,6 +214,9 @@ public class Tarea implements tieneLista, tieneClave, Facturacion, Serializable 
             return "Pagina Web";
         }
     }
+    public void anyadirEtiqueta(String e){
+        etiquetas.añadirEtiqueta(e);
+    }
 
 
 

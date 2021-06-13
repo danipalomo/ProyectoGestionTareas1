@@ -1,9 +1,10 @@
 package Listas;
 import Excepciones.ListaVaciaException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UtilidadesParaListas<E> {
+public class UtilidadesParaListas<E> implements Serializable {
     public static <E extends tieneLista> ArrayList<E> elementosConListaVacia(ArrayList<E> lista){
         ArrayList<E> listaElementosVacios=new ArrayList<>();
         for(E elemento:lista){

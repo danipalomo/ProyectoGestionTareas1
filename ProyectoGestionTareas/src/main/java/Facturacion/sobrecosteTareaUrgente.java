@@ -1,6 +1,8 @@
 package Facturacion;
 
-public class sobrecosteTareaUrgente implements Facturacion {
+import java.io.Serializable;
+
+public class sobrecosteTareaUrgente implements Facturacion, Serializable {
     double sobrecoste;
     double coste;
     public sobrecosteTareaUrgente(double sobrecoste, double coste){

@@ -126,7 +126,7 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
 
         labelCoste.setText("coste");
 
-        labelEtiquetas.setText("etiquetas");
+        labelEtiquetas.setText("");
 
         jLabel12.setText("jLabel12");
 

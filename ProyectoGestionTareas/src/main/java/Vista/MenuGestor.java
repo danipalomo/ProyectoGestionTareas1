@@ -14,6 +14,7 @@ import Modelo.Modelo;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,6 +174,18 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
             }
         };
         botonEditarTarea.addActionListener(editarTareaListener);
+
+        ActionListener guardarListener=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controlador.guardarProyecto();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        };
+        botonGuardarYSalir.addActionListener(guardarListener);
 
         ActionListener verTareaListener=new ActionListener() {
             @Override
