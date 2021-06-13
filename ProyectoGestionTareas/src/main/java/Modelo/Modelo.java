@@ -113,16 +113,17 @@ public class Modelo implements Serializable{
     }
 
 
-    public  Proyecto cargarProyecto() throws IOException, ClassNotFoundException {
+    public  Modelo cargarProyecto() throws IOException, ClassNotFoundException {
+        Modelo m=this;
         try {
             FileInputStream fis = new FileInputStream("agenda.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            proyecto = (Proyecto) ois.readObject();
+            m = (Modelo) ois.readObject();
             ois.close();
         }catch(ClassNotFoundException classNotFoundException) {
             classNotFoundException.printStackTrace();
         }
-        return proyecto;
+        return m;
     }
 
     public void guardarProyecto() throws IOException {

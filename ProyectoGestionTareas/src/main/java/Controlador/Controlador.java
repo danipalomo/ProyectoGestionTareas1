@@ -36,7 +36,7 @@ public class Controlador implements ActionListener, Serializable {
     private EditarPersona editarPersona;
     private EditarTarea editarTarea;
     private MostrarDatosTarea mostrarDatosTarea;
-    private HashMap<String, Proyecto> mapaProyectos=new HashMap<>();
+    private Proyecto proyectoGuardado;
 
     private int punteroListaPersonas; //puntero de la persona seleccionada en el menu gestor
     private int punteroListaTareas; //puntero de la tarea seleccionada en el menu gestor
@@ -78,10 +78,7 @@ public class Controlador implements ActionListener, Serializable {
         ventanaInicio.setVisible(false);
     } //bien
 
-    public void abrirProyecto(){
-        cargarProyecto.setVisible(true);
-        ventanaInicio.setVisible(false);
-    }
+
 
     public void crearTarea(ArrayList<String> etiquetas)  {
         double costAltaTarea = Double.parseDouble(altaTarea.getEntradaCoste().getText());
@@ -124,9 +121,15 @@ public class Controlador implements ActionListener, Serializable {
     } //bien
 
     public void limpiarAltaTarea(){
+        altaTarea.getEntradaTitulo().setText("");
         altaTarea.getEntradaIdTarea().setText("");
         altaTarea.getEntradaResponsable().setText("");
         altaTarea.getEntradaCoste().setText("");
+    }
+    public void limpiarAltaPersona(){
+        darAltaPersona.getEntradaDni().setText("");
+        darAltaPersona.getEntradaNombre().setText("");
+        darAltaPersona.getEntradaCorreo().setText("");
     }
 
     public void terminarBiblioteca(){
@@ -206,6 +209,7 @@ public class Controlador implements ActionListener, Serializable {
         darAltaPersona.setVisible(false);
         menuGestor.setVisible(true);
         menuGestor.actualizarPersonas(modelo.getListaPersonas());
+        limpiarAltaPersona();
     }
 
     public void editarTarea(){
@@ -376,16 +380,24 @@ public class Controlador implements ActionListener, Serializable {
     }
 
     public void cargarProyecto() throws IOException, ClassNotFoundException {
+        ventanaInicio.setVisible(false);
+        menuGestor.setVisible(true);
+        menuGestor.actualizarPersonas(modelo.getListaPersonas());
+        menuGestor.actualizarTareas(modelo.getListTareas());
+        Modelo modeloPasado = null;
         try {
-            modelo.cargarProyecto();
+            modeloPasado=modelo.cargarProyecto();
         }catch (ClassNotFoundException classNotFoundException){
             classNotFoundException.printStackTrace();
         }
+        this.modelo=modeloPasado;
     }
 
     public void guardarProyecto() throws IOException {
         try {
+            proyectoGuardado=modelo.getProyecto();
             modelo.guardarProyecto();
+
         }catch (IOException ioException){
             ioException.printStackTrace();
         }

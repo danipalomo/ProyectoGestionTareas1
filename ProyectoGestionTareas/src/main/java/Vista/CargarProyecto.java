@@ -8,11 +8,10 @@ package Vista;
 import Clases.Proyecto;
 import Controlador.Controlador;
 
-import Controlador.Controlador;
-
-import javax.swing.*;
+import javax.swing.DefaultListModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -31,7 +30,6 @@ public class  CargarProyecto extends javax.swing.JFrame implements Serializable 
         listaProyectos.setModel(proyectos);
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,50 +39,48 @@ public class  CargarProyecto extends javax.swing.JFrame implements Serializable 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     public void initComponents() {
 
-        jScrollPane1 = new JScrollPane();
-        listaProyectos = new JList<>();
-        botonAbrir = new JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaProyectos = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CARGAR PROYECTO");
 
         jScrollPane1.setViewportView(listaProyectos);
 
-        botonAbrir.setText("CARGAR");
+        jButton1.setText("CARGAR");
 
-        ActionListener abrirProyectoListener=new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controlador.abrirProyecto();
-            }
-        };
-        botonAbrir.addActionListener(abrirProyectoListener);
-/*
-        botonAbrir.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-                botonCargarProyectoActionPerformed(evt);
+                try {
+                    botonCargarProyectoActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-        });*/
+        });
         //Este boton tiene que ser llevado por controlador
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 301, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(botonAbrir)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)
                                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(botonAbrir, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -127,14 +123,14 @@ public class  CargarProyecto extends javax.swing.JFrame implements Serializable 
     }
     public void setControlador(Controlador c){
         this.controlador=c;
-    }/*
-    private void botonCargarProyectoActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+    private void botonCargarProyectoActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         // TODO add your handling code here:
-        Proyecto proyectoSeleccionado=controlador.getListaProyectosGuardados().get(listaProyectos.getSelectedIndex());
-    }*/
+        controlador.cargarProyecto();
+    }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton botonAbrir;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listaProyectos;
     // End of variables declaration

@@ -57,6 +57,7 @@ public class VentanaInicio extends JFrame implements Serializable {
         ActionListener abrirProyectoListener=new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 try {
                     controlador.cargarProyecto();
                 } catch (IOException ioException) {
