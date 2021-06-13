@@ -2,15 +2,11 @@ package Modelo;
 
 import Clases.*;
 import Excepciones.*;
-import Facturacion.*;
 import Resultados.*;
-import Vista.MenuGestor;
 
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class Modelo implements Serializable{
@@ -113,23 +109,23 @@ public class Modelo implements Serializable{
     }
 
 
-    public  Modelo cargarProyecto() throws IOException, ClassNotFoundException {
-        Modelo m=this;
+    public  Proyecto cargarProyecto() throws IOException, ClassNotFoundException {
+        Proyecto p=this.proyecto;
         try {
-            FileInputStream fis = new FileInputStream("agenda.bin");
+            FileInputStream fis = new FileInputStream("agenda.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            m = (Modelo) ois.readObject();
+            p = (Proyecto) ois.readObject();
             ois.close();
         }catch(ClassNotFoundException classNotFoundException) {
             classNotFoundException.printStackTrace();
         }
-        return m;
+        return p;
     }
 
     public void guardarProyecto() throws IOException {
-        FileOutputStream fos = new FileOutputStream("agenda.bin");
+        FileOutputStream fos = new FileOutputStream("agenda.ser");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(this);
+        oos.writeObject(proyecto);
         oos.close();
 
     }

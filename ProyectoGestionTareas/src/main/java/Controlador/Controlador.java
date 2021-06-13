@@ -382,15 +382,16 @@ public class Controlador implements ActionListener, Serializable {
     public void cargarProyecto() throws IOException, ClassNotFoundException {
         ventanaInicio.setVisible(false);
         menuGestor.setVisible(true);
-        menuGestor.actualizarPersonas(modelo.getListaPersonas());
-        menuGestor.actualizarTareas(modelo.getListTareas());
-        Modelo modeloPasado = null;
+
+        Proyecto proyectoPasado = null;
         try {
-            modeloPasado=modelo.cargarProyecto();
+            proyectoPasado=modelo.cargarProyecto();
         }catch (ClassNotFoundException classNotFoundException){
             classNotFoundException.printStackTrace();
         }
-        this.modelo=modeloPasado;
+        modelo.setProyecto(proyectoPasado);
+        menuGestor.actualizarPersonas(modelo.getListaPersonas());
+        menuGestor.actualizarTareas(modelo.getListTareas());
     }
 
     public void guardarProyecto() throws IOException {
