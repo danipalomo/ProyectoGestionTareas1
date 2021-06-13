@@ -14,7 +14,7 @@ import java.io.Serializable;
  *
  * @author alemo
  */
-public class TareaPrograma extends javax.swing.JFrame implements Serializable {
+public class TareaPrograma extends javax.swing.JFrame implements Serializable, Resultados  {
 
     /**
      * Creates new form TareaPrograma

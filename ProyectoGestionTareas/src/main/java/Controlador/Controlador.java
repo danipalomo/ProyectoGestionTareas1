@@ -19,7 +19,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.lang.*;
 
 public class Controlador implements ActionListener, Serializable, ControladorInterfaz {
@@ -431,7 +430,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             System.exit(0); //error no guarda el proyecto de mierda joder voy al tanatorio a desahogarme jeje hola  ?
         }
 
-        if (tareaBiblioteca.getBotonTerminar() == evt.getSource()) {
+        if (tareaBiblioteca.getBotonCrear() == evt.getSource()) {
             terminarBiblioteca();
         }
         if (tareaPrograma.getBotonCrear() == evt.getSource()) {

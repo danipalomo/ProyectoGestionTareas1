@@ -17,9 +17,9 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
  *
  * @author alemo
  */
-public class TareaBiblioteca extends javax.swing.JFrame implements Serializable {
+public class TareaBiblioteca extends javax.swing.JFrame implements Serializable, Resultados  {
 
-    public JButton getBotonTerminar() {
+    public JButton getBotonCrear() {
         return botonTerminar;
     }
 
