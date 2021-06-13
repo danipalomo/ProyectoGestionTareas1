@@ -8,8 +8,10 @@ package Vista;
 import Controlador.Controlador;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -38,7 +40,7 @@ public class TareaPrograma extends javax.swing.JFrame implements Serializable {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         spinnerNumModulos = new javax.swing.JSpinner();
-        botonCrear = new javax.swing.JButton();
+        botonTerminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,7 +50,17 @@ public class TareaPrograma extends javax.swing.JFrame implements Serializable {
 
         jLabel3.setText("Nº Modulos:");
 
-        botonCrear.setText("CREAR");
+        botonTerminar.setText("CREAR");
+
+        ActionListener terminar=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.terminarPrograma();
+
+            }
+        };
+        botonTerminar.addActionListener(terminar);
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,7 +85,7 @@ public class TareaPrograma extends javax.swing.JFrame implements Serializable {
                                                                         .addComponent(spinnerNumLineas, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)))))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(155, 155, 155)
-                                                .addComponent(botonCrear)))
+                                                .addComponent(botonTerminar)))
                                 .addContainerGap(191, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -92,15 +104,15 @@ public class TareaPrograma extends javax.swing.JFrame implements Serializable {
                                         .addComponent(jLabel3)
                                         .addComponent(spinnerNumModulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(56, 56, 56)
-                                .addComponent(botonCrear)
+                                .addComponent(botonTerminar)
                                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>
 
-    public JButton getBotonCrear() {
-        return botonCrear;
+    public JButton getBotonTerminar() {
+        return botonTerminar;
     }
 
     public JTextField getEntradaLenguaje() {
@@ -127,51 +139,21 @@ public class TareaPrograma extends javax.swing.JFrame implements Serializable {
         return spinnerNumModulos;
     }
 
-    public void setControlador(Controlador c){
-        botonCrear.addActionListener(c);
+    public void setControlador(ControladorInterfaz c){
+        controlador=c;
     }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TareaPrograma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TareaPrograma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TareaPrograma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TareaPrograma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TareaPrograma().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton botonCrear;
+    private javax.swing.JButton botonTerminar;
     private javax.swing.JTextField entradaLenguaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSpinner spinnerNumLineas;
     private javax.swing.JSpinner spinnerNumModulos;
+    private ControladorInterfaz controlador;
     // End of variables declaration
 }

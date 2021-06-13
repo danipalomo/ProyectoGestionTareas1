@@ -66,48 +66,16 @@ public class Modelo implements Serializable, ModeloInterfaz{
                 listaVaciaException.printStackTrace();
             }
         }
-
-    }
-    public Tarea buscarTarea(String titulo){
-        for(Tarea t:proyecto.getListaTareas()){
-            if(t.getClave().equals(titulo)){
-                return t;
-            }
-        }
-        return null;
     }
     public void setProyecto(Proyecto proyecto){
         this.proyecto=proyecto;
     }
-
-
-
     public String getNombreProyecto() {
         return nombreProyecto;
     }
-
     public Proyecto getProyecto() {
         return proyecto;
     }
-
-    public boolean isCerrarPrograma() {
-        return cerrarPrograma;
-    }
-
-
-
-    public  String leerString(){
-        return sc.next();
-    }
-
-    public  int leerInt(){
-        return sc.nextInt();
-    }
-
-    public Double leerDouble(){
-        return sc.nextDouble();
-    }
-
 
     public  Proyecto cargarProyecto() throws IOException, ClassNotFoundException {
         Proyecto p=this.proyecto;
@@ -191,6 +159,7 @@ public class Modelo implements Serializable, ModeloInterfaz{
         }
         return true;
     }
+
 
     public boolean sePuedeAnyadir(Tarea t){
         String titulo=t.getTitulo();

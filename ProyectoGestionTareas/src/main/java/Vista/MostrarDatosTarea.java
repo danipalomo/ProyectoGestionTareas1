@@ -10,6 +10,7 @@ import Controlador.Controlador;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import Controlador.*;
 
 /**
  *
@@ -305,7 +306,7 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
         return labelCoste;
     }
 
-    public void setControlador(Controlador c){
+    public void setControlador(ControladorInterfaz c){
         controlador=c;
     }
 
@@ -361,6 +362,6 @@ public class MostrarDatosTarea extends javax.swing.JFrame {
     private javax.swing.JLabel labelTipo;
     private javax.swing.JLabel labelTipoConsumo;
     private javax.swing.JLabel labelTitulo;
-    private Controlador controlador;
+    private ControladorInterfaz controlador;
     // End of variables declaration
 }

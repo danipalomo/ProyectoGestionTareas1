@@ -5,13 +5,15 @@ import Vista.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import Modelo.*;
+import Controlador.*;
 
 
 public class MainGrafico implements Serializable {
     public static void main(String[] args) {
 
         VentanaInicio ventanaInicio=new VentanaInicio();
-        Modelo modelo=new Modelo();
+        ModeloInterfaz modelo=new Modelo();
         MenuGestor menu=new MenuGestor(true);
         CargarProyecto cargarProyecto=new CargarProyecto();
         DarAltaTarea darAltaTarea=new DarAltaTarea();
@@ -23,7 +25,7 @@ public class MainGrafico implements Serializable {
         EditarPersona editarPersona=new EditarPersona();
         EditarTarea editarTarea=new EditarTarea();
         MostrarDatosTarea mostrarDatosTarea=new MostrarDatosTarea();
-        Controlador c=new Controlador(darAltaTarea, cargarProyecto, darAltaPersona, tareaPaginaWeb, tareaBiblioteca, tareaPrograma, menu, tareaDocumentacion,ventanaInicio, modelo, editarPersona, editarTarea, mostrarDatosTarea);
+        ControladorInterfaz c=new Controlador(darAltaTarea, cargarProyecto, darAltaPersona, tareaPaginaWeb, tareaBiblioteca, tareaPrograma, menu, tareaDocumentacion,ventanaInicio, modelo, editarPersona, editarTarea, mostrarDatosTarea);
         ventanaInicio.setControlador(c);
         menu.setControlador(c);
         darAltaTarea.setControlador(c);

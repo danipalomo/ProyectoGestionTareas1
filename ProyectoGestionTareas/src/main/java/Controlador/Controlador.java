@@ -19,8 +19,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.lang.*;
+import Modelo.*;
 
 public class Controlador implements ActionListener, Serializable, ControladorInterfaz {
     private DarAltaTarea altaTarea;
@@ -32,7 +32,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
     private MenuGestor menuGestor;
     private TareaDocumentacion tareaDocumentacion;
     private VentanaInicio ventanaInicio;
-    private Modelo modelo;
+    private ModeloInterfaz modelo;
     private EditarPersona editarPersona;
     private EditarTarea editarTarea;
     private MostrarDatosTarea mostrarDatosTarea;
@@ -49,7 +49,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
 
 
 
-    public Controlador(DarAltaTarea altaTarea, CargarProyecto cargarProyecto, DarAltaPersona darAltaPersona, TareaPaginaWeb tareaPaginaWeb, TareaBiblioteca tareaBiblioteca, TareaPrograma tareaPrograma, MenuGestor menuGestor, TareaDocumentacion tareaDocumentacion, VentanaInicio ventanaInicio, Modelo modelo, EditarPersona editarPersona, EditarTarea editarTarea, MostrarDatosTarea mostrarDatosTarea) {
+    public Controlador(DarAltaTarea altaTarea, CargarProyecto cargarProyecto, DarAltaPersona darAltaPersona, TareaPaginaWeb tareaPaginaWeb, TareaBiblioteca tareaBiblioteca, TareaPrograma tareaPrograma, MenuGestor menuGestor, TareaDocumentacion tareaDocumentacion, VentanaInicio ventanaInicio, ModeloInterfaz modelo, EditarPersona editarPersona, EditarTarea editarTarea, MostrarDatosTarea mostrarDatosTarea) {
         this.altaTarea = altaTarea;
         this.cargarProyecto = cargarProyecto;
         this.darAltaPersona = darAltaPersona;
@@ -126,11 +126,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
         altaTarea.getEntradaResponsable().setText("");
         altaTarea.getEntradaCoste().setText("");
     }
-    public void limpiarAltaPersona(){
-        darAltaPersona.getEntradaDni().setText("");
-        darAltaPersona.getEntradaNombre().setText("");
-        darAltaPersona.getEntradaCorreo().setText("");
-    }
+
 
     public void terminarBiblioteca(){
         ;//devuelve la ultima tarea creada que se encuentra en la posicion size-1 y ademas es la ultima creada en la ventana anterior :)
@@ -141,10 +137,6 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             modelo.setResultado(biblio, modelo.getUltimaTarea());
             tareaBiblioteca.setVisible(false);
             menuGestor.setVisible(true);
-
-
-        } else {
-            System.out.println("Error, no has introducido ningún lenguaje");
         }
     } //bien
 
@@ -152,32 +144,22 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
         String formato = tareaDocumentacion.getEntradaFormato().getText();
         Double espacio = Double.parseDouble(tareaDocumentacion.getEntradaEspacio().getText());
         int paginas = (Integer) tareaDocumentacion.getSpinnerNumPaginas().getValue();
-        if (formato.equals("") || tareaDocumentacion.getEntradaEspacio() == null) {
-            System.out.println("No puedes dejar vacíos el tipo de formato ni el espacio en disco");
-            if (paginas == 0) {
-                System.out.println("La documentacion no puede tener 0 páginas");
-            }
-        } else {
+
             Documentacion doc = new Documentacion(formato, paginas, espacio);
             modelo.setResultado(doc, modelo.getUltimaTarea());
             menuGestor.setVisible(true);
             tareaDocumentacion.setVisible(false);
 
-        }
     }
 
     public void terminarPrograma(){
         int lineas = (Integer) tareaPrograma.getSpinnerNumLineas().getValue();
         int modulos = (Integer) tareaPrograma.getSpinnerNumModulos().getValue();
-        if (!tareaPrograma.getEntradaLenguaje().getText().equals("")) {
             Programa prog = new Programa(tareaPrograma.getEntradaLenguaje().getText(), lineas, modulos);
             modelo.setResultado(prog, modelo.getUltimaTarea());
             tareaPrograma.setVisible(false);
             menuGestor.setVisible(true);
 
-        } else {
-            System.out.println("Error, no has introducido ningún lenguaje");
-        }
     }
 
     public void terminarPaginaWeb(){
@@ -220,9 +202,6 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             editarTarea.actualizarPersonas(modelo.getListaPersonas());
             editarTarea.actualizarPersonasEspecificas(modelo.getListTareas().get(punteroListaTareas).getPersonasAsignadas());
         }
-        else{
-            //Implementar una excepcion de seleccion vacia
-        }
     }
 
 
@@ -234,9 +213,6 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             modelo.anyadirPersonaATarea(t,p);
             editarTarea.actualizarPersonasEspecificas(modelo.getPersonasDeUnaTarea(t));
         }
-        else{
-            //implementar excepcion de error por no haber seleccionado ninguna persona a añadir
-        }
     }
 
     public void quitarPersona(){
@@ -247,11 +223,6 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             modelo.eliminarPersonaDeTarea(t,punteroListaPersonasDeUnaTarea);
             editarTarea.actualizarPersonasEspecificas(modelo.getPersonasDeUnaTarea(t));
 
-            System.out.println(punteroListaPersonasDeUnaTarea);
-            System.out.println(t.getPersonasAsignadas().toString());
-        }
-        else{
-            //excepcion no haber selccionado ninguna persona a añadir
         }
 
     }
@@ -266,6 +237,12 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
         menuGestor.setVisible(true);
     }
 
+    public void limpiarAltaPersona(){
+        darAltaPersona.getEntradaDni().setText("");
+        darAltaPersona.getEntradaNombre().setText("");
+        darAltaPersona.getEntradaCorreo().setText("");
+    }
+
 
     public void editarPersona(){
         if(!menuGestor.getListaPersonas().isSelectionEmpty()) {
@@ -275,9 +252,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             editarPersona.actualizarTareas(modelo.getListTareas());
             editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(punteroListaPersonas));
         }
-        else{
-            //Implementar una excepcion de seleccion vacia
-        }
+
     }
 
     public void anyadirTareaAPersona(){
@@ -288,9 +263,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             modelo.anyadirTareaAPersona(p,t);
             editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(p));
         }
-        else{
-            //implementar excepcion de error por no haber seleccionado ninguna persona a añadir
-        }
+
     }
 
     public void quitarTarea(){
@@ -302,9 +275,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             editarPersona.actualizarTareasEspecificas(modelo.getTareasDeUnaPersona(p));
 
         }
-        else{
-            //excepcion no haber selccionado ninguna persona a añadir
-        }
+
     }
 
     public void borrarPersona(){
@@ -327,13 +298,11 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             mostrarDatosTarea.setVisible(true);
             mostrarDatosTarea();
         }
-        else{
-            //excepcion, no se ha seleccionado nada
-        }
+
     }
 
     public void mostrarDatosTarea(){
-        System.out.println(modelo.getUltimaTarea().getInternoExterno());
+
         Tarea t=modelo.getTarea(punteroListaTareas);
 
         if(!modelo.getDescripcion(punteroListaTareas).equals("")){
@@ -359,7 +328,7 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
         mostrarDatosTarea.getLabelResultado().setText(t.getResultadoToString());
         mostrarDatosTarea.getLabelTipo().setText(modelo.getTipoTarea(punteroListaTareas));
         mostrarDatosTarea.getLabelEtiquetas().setText(modelo.getEtiquetas(punteroListaTareas));
-        System.out.println(modelo.getResultado(punteroListaTareas));
+
     }
 
     public void setFalta(JLabel label, String g){
@@ -418,8 +387,6 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-            } else {
-                System.out.println("Error, no has creado ningún proyecto todavía");
             }
         }
         if (menuGestor.getBotonGuardarYSalir() == evt.getSource()) {
@@ -428,19 +395,18 @@ public class Controlador implements ActionListener, Serializable, ControladorInt
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.exit(0); //error no guarda el proyecto de mierda joder voy al tanatorio a desahogarme jeje hola  ?
         }
 
         if (tareaBiblioteca.getBotonTerminar() == evt.getSource()) {
             terminarBiblioteca();
         }
-        if (tareaPrograma.getBotonCrear() == evt.getSource()) {
+        if (tareaPrograma.getBotonTerminar() == evt.getSource()) {
             terminarPrograma();
         }
-        if (tareaDocumentacion.getBotonCrear() == evt.getSource()) {
+        if (tareaDocumentacion.getBotonTerminar() == evt.getSource()) {
             terminarDocumentacion();
         }
-        if (tareaPaginaWeb.getBotonCrear() == evt.getSource()) {
+        if (tareaPaginaWeb.getBotonTerminar() == evt.getSource()) {
             terminarPaginaWeb();
         }
         if (darAltaPersona.getBotonAnyadir() == evt.getSource()) {

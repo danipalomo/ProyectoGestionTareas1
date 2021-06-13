@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.*;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -492,7 +492,7 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
 
 
 
-    public void setControlador(Controlador c){
+    public void setControlador(ControladorInterfaz c){
         controlador=c;
     }
     private void desplegableInternoExternoActionPerformed(java.awt.event.ActionEvent evt) {
@@ -624,6 +624,6 @@ public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel simboloEuro;
     private javax.swing.JSpinner spinnerNumHoras;
     private javax.swing.JSpinner spinnerPrioridad;
-    private Controlador controlador;
+    private ControladorInterfaz controlador;
     // End of variables declaration
 }

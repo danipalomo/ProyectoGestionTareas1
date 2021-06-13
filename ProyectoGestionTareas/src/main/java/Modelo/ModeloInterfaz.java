@@ -16,22 +16,14 @@ public interface ModeloInterfaz {
     public ArrayList<Tarea> getListTareas();
     public ArrayList<Persona> getListaPersonas();
     public void darDeAltaPersona(String dni, String nombre, String correo) throws ListaVaciaException, PersonaRepetidaException;
-    public String nombreTarea(int index);
     public void borrarPersona(int index);
-    public Persona getUltimaPersona();
     public void darDeAltaTarea(String titulo, String descripcion, String responsable, int prioridad, double coste, int facturacion,double var, int resultado, String id, int horas, int tipo  ) throws TareaRepetidaException;
-    public Tarea buscarTarea(String titulo);
+
     public void setProyecto(Proyecto proyecto);
     public String getNombreProyecto();
     public Proyecto getProyecto();
-    public boolean isCerrarPrograma();
-    public  String leerString();
-    public  int leerInt();
-    public Double leerDouble();
     public  Proyecto cargarProyecto() throws IOException, ClassNotFoundException;
     public void guardarProyecto() throws IOException;
-    public void pedirNombreTarea();
-    public void nombresTareas();
     public void anyadirPersonaATarea(Tarea t, Persona p);
     public void anyadirTareaAPersona(Persona p, Tarea t);
     public void setTareaFinalizada(int index);

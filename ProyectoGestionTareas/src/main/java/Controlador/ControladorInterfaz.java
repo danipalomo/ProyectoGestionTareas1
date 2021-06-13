@@ -29,5 +29,4 @@ public interface ControladorInterfaz {
     public void limpiarAltaTarea();
     public void crearTarea(ArrayList<String> etiquetas);
     public void crearProyecto();
-    public boolean dniEncontradoEnListaDePersonas(ArrayList<Persona> listaPersonas, String dni);
 }

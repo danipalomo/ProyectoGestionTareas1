@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -28,7 +28,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form MenuGestor
      */
-    private Controlador controlador;
+    private ControladorInterfaz controlador;
     private DarAltaTarea darAltaTarea=new DarAltaTarea();
     private DarAltaPersona darAltaPersona=new DarAltaPersona();
 
@@ -39,7 +39,7 @@ public class MenuGestor extends javax.swing.JFrame implements Serializable {
         darAltaTarea=aT;
     }
 
-    public void setControlador(Controlador c){
+    public void setControlador(ControladorInterfaz c){
         this.controlador=c;
     }
 

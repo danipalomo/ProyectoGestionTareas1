@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -24,9 +24,9 @@ public class EditarTarea extends javax.swing.JFrame implements Serializable {
      * Creates new form EditarTarea
      */
 
-    public Controlador controlador;
+    public ControladorInterfaz controlador;
 
-    public void setControlador(Controlador c){
+    public void setControlador(ControladorInterfaz c){
         controlador=c;
     }
 

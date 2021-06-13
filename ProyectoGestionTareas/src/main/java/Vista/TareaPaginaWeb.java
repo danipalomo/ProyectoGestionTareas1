@@ -8,8 +8,10 @@ package Vista;
 import Controlador.Controlador;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -38,7 +40,7 @@ public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable {
         entradaLenguaje = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         entradaBackend = new javax.swing.JTextField();
-        botonCrear = new javax.swing.JButton();
+        botonTerminar = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -50,7 +52,17 @@ public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable {
 
         jLabel3.setText("Tipo backend:");
 
-        botonCrear.setText("CREAR");
+        botonTerminar.setText("CREAR");
+
+        ActionListener terminar=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.terminarPaginaWeb();
+
+            }
+        };
+        botonTerminar.addActionListener(terminar);
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,7 +83,7 @@ public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable {
                                 .addContainerGap(192, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botonCrear)
+                                .addComponent(botonTerminar)
                                 .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
@@ -88,15 +100,15 @@ public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable {
                                         .addComponent(jLabel3)
                                         .addComponent(entradaBackend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                                .addComponent(botonCrear)
+                                .addComponent(botonTerminar)
                                 .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>
 
-    public JButton getBotonCrear() {
-        return botonCrear;
+    public JButton getBotonTerminar() {
+        return botonTerminar;
     }
 
     public JComboBox<String> getDesplegableEstaticaDinamica() {
@@ -124,8 +136,8 @@ public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable {
     }
 
 
-    public void setControlador(Controlador c){
-        botonCrear.addActionListener(c);
+    public void setControlador(ControladorInterfaz c){
+        controlador=c;
     }
     /**
      * @param args the command line arguments
@@ -163,12 +175,13 @@ public class TareaPaginaWeb extends javax.swing.JFrame implements Serializable {
     }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton botonCrear;
+    private javax.swing.JButton botonTerminar;
     private javax.swing.JComboBox<String> desplegableEstaticaDinamica;
     private javax.swing.JTextField entradaBackend;
     private javax.swing.JTextField entradaLenguaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private ControladorInterfaz controlador;
     // End of variables declaration
 }

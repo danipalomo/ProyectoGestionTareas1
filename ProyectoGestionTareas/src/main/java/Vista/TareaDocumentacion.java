@@ -8,8 +8,10 @@ package Vista;
 import Controlador.Controlador;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -23,8 +25,8 @@ public class TareaDocumentacion extends javax.swing.JFrame implements Serializab
         initComponents();
     }
 
-    public JButton getBotonCrear() {
-        return botonCrear;
+    public JButton getBotonTerminar() {
+        return botonTerminar;
     }
 
     public JTextField getEntradaEspacio() {
@@ -66,7 +68,7 @@ public class TareaDocumentacion extends javax.swing.JFrame implements Serializab
         spinnerNumPaginas = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         entradaEspacio = new javax.swing.JTextField();
-        botonCrear = new javax.swing.JButton();
+        botonTerminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,7 +78,17 @@ public class TareaDocumentacion extends javax.swing.JFrame implements Serializab
 
         jLabel3.setText("Espacio en disco:");
 
-        botonCrear.setText("CREAR");
+        botonTerminar.setText("CREAR");
+
+        ActionListener terminar=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlador.terminarDocumentacion();
+
+            }
+        };
+        botonTerminar.addActionListener(terminar);
+
 
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -102,7 +114,7 @@ public class TareaDocumentacion extends javax.swing.JFrame implements Serializab
                                                                 .addComponent(spinnerNumPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(168, 168, 168)
-                                                .addComponent(botonCrear)))
+                                                .addComponent(botonTerminar)))
                                 .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -119,58 +131,29 @@ public class TareaDocumentacion extends javax.swing.JFrame implements Serializab
                                         .addComponent(jLabel3)
                                         .addComponent(entradaEspacio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
-                                .addComponent(botonCrear)
+                                .addComponent(botonTerminar)
                                 .addGap(91, 91, 91))
         );
 
         pack();
     }// </editor-fold>
-    public void setControlador(Controlador c){
-        botonCrear.addActionListener(c);
+    public void setControlador(ControladorInterfaz c){
+        controlador=c;
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TareaDocumentacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TareaDocumentacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TareaDocumentacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TareaDocumentacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TareaDocumentacion().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton botonCrear;
+    private javax.swing.JButton botonTerminar;
     private javax.swing.JTextField entradaEspacio;
     private javax.swing.JTextField entradaFormato;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSpinner spinnerNumPaginas;
+    private ControladorInterfaz controlador;
     // End of variables declaration
 }

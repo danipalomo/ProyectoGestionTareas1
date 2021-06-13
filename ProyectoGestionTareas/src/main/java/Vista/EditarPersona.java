@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -269,7 +269,7 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
             botonAnyadirTarea
 
         }*/
-    public void setControlador(Controlador c){
+    public void setControlador(ControladorInterfaz c){
         controlador=c;
     }
 
@@ -286,6 +286,6 @@ public class EditarPersona extends javax.swing.JFrame implements Serializable {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelError;
     private javax.swing.JList<String> listaTareasAsignadas;
-    private Controlador controlador;
+    private ControladorInterfaz controlador;
     // End of variables declaration
 }

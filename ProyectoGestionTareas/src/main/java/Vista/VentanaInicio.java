@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
-
+import Controlador.*;
 public class VentanaInicio extends JFrame implements Serializable {
     /**
      * Creates new form VentanaGestorTareas
@@ -141,7 +141,7 @@ public class VentanaInicio extends JFrame implements Serializable {
         return entradaNombreProyecto;
     }
 
-    public void setControlador(Controlador c){
+    public void setControlador(ControladorInterfaz c){
         controlador=c;
     }
 
@@ -156,7 +156,7 @@ public class VentanaInicio extends JFrame implements Serializable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField entradaNombreProyecto;
-    private Controlador controlador;
+    private ControladorInterfaz controlador;
     private javax.swing.JLabel mensajeError;
     // End of variables declaration
 }

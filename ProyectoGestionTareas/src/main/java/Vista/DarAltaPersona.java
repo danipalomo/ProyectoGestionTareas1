@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
-
+import Controlador.*;
 /**
  *
  * @author alemo
@@ -124,7 +124,7 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
 
     /***/
 
-    public void setControlador(Controlador c){
+    public void setControlador(ControladorInterfaz c){
         controlador=c;
     }
     // Variables declaration - do not modify
@@ -137,7 +137,7 @@ public class DarAltaPersona extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel mensajeError;
 
-    public Controlador controlador;
+    public ControladorInterfaz controlador;
 
     public void setMensajeError(String mensajeError){
         this.mensajeError.setText(mensajeError);
