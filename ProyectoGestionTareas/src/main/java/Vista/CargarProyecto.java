@@ -5,7 +5,12 @@
  */
 package Vista;
 
+import Clases.Proyecto;
+import Controlador.Controlador;
+
 import javax.swing.DefaultListModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 
 /**
@@ -13,7 +18,7 @@ import java.io.Serializable;
  * @author alemo
  */
 public class  CargarProyecto extends javax.swing.JFrame implements Serializable {
-
+    private Controlador controlador;
     DefaultListModel proyectos=new DefaultListModel();
     /**
      * Creates new form CargarProyecto
@@ -44,6 +49,13 @@ public class  CargarProyecto extends javax.swing.JFrame implements Serializable 
 
         jButton1.setText("CARGAR");
 
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                botonCargarProyectoActionPerformed(evt);
+            }
+        });
+        //Este boton tiene que ser llevado por controlador
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,6 +113,13 @@ public class  CargarProyecto extends javax.swing.JFrame implements Serializable 
                 new CargarProyecto().setVisible(true);
             }
         });
+    }
+    public void setControlador(Controlador c){
+        this.controlador=c;
+    }
+    private void botonCargarProyectoActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        Proyecto proyectoSeleccionado=controlador.getListaProyectosGuardados().get(listaProyectos.getSelectedIndex());
     }
 
     // Variables declaration - do not modify

@@ -34,7 +34,12 @@ public class Controlador implements ActionListener {
     private EditarPersona editarPersona;
     private EditarTarea editarTarea;
     private MostrarDatosTarea mostrarDatosTarea;
-    private HashMap<String, Proyecto> mapaProyectos=new HashMap<>();
+
+    public ArrayList<Proyecto> getListaProyectosGuardados() {
+        return listaProyectosGuardados;
+    }
+
+    private ArrayList<Proyecto> listaProyectosGuardados=new ArrayList<>();
 
     private int punteroListaPersonas; //puntero de la persona seleccionada en el menu gestor
     private int punteroListaTareas; //puntero de la tarea seleccionada en el menu gestor
@@ -109,7 +114,13 @@ public class Controlador implements ActionListener {
             altaTarea.setVisible(false);
         }
     } //bien
+    public void abrirProyecto(Proyecto p){
+        modelo.setProyecto(p);
 
+    }
+    public void guardarProyectoEnListaProyectos(Proyecto p){
+        listaProyectosGuardados.add(p);
+    }
     public void terminarBiblioteca(){
         ;//devuelve la ultima tarea creada que se encuentra en la posicion size-1 y ademas es la ultima creada en la ventana anterior :)
         int lineas = (Integer) tareaBiblioteca.getSpinnerNumLineas().getValue();

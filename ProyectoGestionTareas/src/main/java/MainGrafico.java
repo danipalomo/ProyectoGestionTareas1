@@ -27,7 +27,7 @@ public class MainGrafico implements Serializable {
         ventanaInicio.setControlador(c);
         menu.setControlador(c);
         darAltaTarea.setControlador(c);
-     //  cargarProyecto.setControlador(c);
+        cargarProyecto.setControlador(c);
 
         ventanaInicio.setControlador(c);
 
