@@ -18,7 +18,7 @@ import Controlador.*;
  *
  * @author alemo
  */
-public class  CargarProyecto extends javax.swing.JFrame implements Serializable {
+public class  CargarProyecto extends javax.swing.JFrame implements Serializable, Vista {
     private ControladorInterfaz controlador;
     DefaultListModel proyectos=new DefaultListModel();
     /**

@@ -18,7 +18,7 @@ import Controlador.*;
  *
  * @author alemo
  */
-public class EditarTarea extends javax.swing.JFrame implements Serializable {
+public class EditarTarea extends javax.swing.JFrame implements Serializable, Vista {
 
     /**
      * Creates new form EditarTarea

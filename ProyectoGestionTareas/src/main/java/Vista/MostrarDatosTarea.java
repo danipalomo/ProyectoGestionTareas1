@@ -16,7 +16,7 @@ import Controlador.*;
  *
  * @author alemo
  */
-public class MostrarDatosTarea extends javax.swing.JFrame {
+public class MostrarDatosTarea extends javax.swing.JFrame implements Vista {
 
     /**
      * Creates new form MostrarDatosTarea

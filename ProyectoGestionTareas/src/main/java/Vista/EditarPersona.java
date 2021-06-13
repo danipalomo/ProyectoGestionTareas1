@@ -18,7 +18,7 @@ import Controlador.*;
  *
  * @author alemo
  */
-public class EditarPersona extends javax.swing.JFrame implements Serializable {
+public class EditarPersona extends javax.swing.JFrame implements Serializable, Vista {
 
     /**
      * Creates new form EditarPersona

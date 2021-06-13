@@ -16,7 +16,7 @@ import Controlador.*;
  *
  * @author alemo
  */
-public class TareaDocumentacion extends javax.swing.JFrame implements Serializable, Resultados  {
+public class TareaDocumentacion extends javax.swing.JFrame implements Serializable, Resultados, Vista  {
 
     /**
      * Creates new form TareaDocumentacion

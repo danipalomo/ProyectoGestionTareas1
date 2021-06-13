@@ -1,10 +1,10 @@
 package Vista;
 
-import Controlador.Controlador;
+import Controlador.*;
 
 import javax.swing.*;
 
 public interface Resultados {
-    public void setControlador(Controlador c);
-    public JButton getBotonCrear();
+    public void setControlador(ControladorInterfaz c);
+    public JButton getBotonTerminar();
 }

@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
 import Controlador.*;
-public class VentanaInicio extends JFrame implements Serializable {
+public class VentanaInicio extends JFrame implements Serializable, Vista {
     /**
      * Creates new form VentanaGestorTareas
      */

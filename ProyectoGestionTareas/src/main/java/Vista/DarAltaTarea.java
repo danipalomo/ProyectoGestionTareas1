@@ -18,7 +18,7 @@ import Controlador.*;
  *
  * @author alemo
  */
-public class DarAltaTarea extends javax.swing.JFrame implements Serializable {
+public class DarAltaTarea extends javax.swing.JFrame implements Serializable, Vista {
 
 
     /**
